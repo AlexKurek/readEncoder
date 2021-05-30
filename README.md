@@ -10,8 +10,9 @@ Reading encoder module for [SRT: The Small Radio Telescope](https://www.haystack
 
 ## Instalation:
 ```
-cmake -DCMAKE_BUILD_TYPE="Release" .
+cmake -DCMAKE_INSTALL_PREFIX="/opt/ReadEncoder/" -DCMAKE_BUILD_TYPE="Release" .
 make
+make install
 ```
 
 ## Run:
