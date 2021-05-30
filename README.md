@@ -18,3 +18,6 @@ make
 ```
 ./ReadEncoder
 ```
+Command line options:
+* h for help
+* c for connection attempt
