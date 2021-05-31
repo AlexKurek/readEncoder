@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.12.4)
 
+
 set(ReadEncoderVERSION 0.1.0)
 if(ReadEncoderVERSION MATCHES "^([0-9]+)\\.([0-9]+)\\.([0-9]+)")
 	set(ReadEncoderVERSION_MAJOR "${CMAKE_MATCH_1}")
@@ -10,19 +11,11 @@ else()
 endif()
 project(ReadEncoder VERSION ${ReadEncoderVERSION})
 
-IF( APPLE )
-	MESSAGE( STATUS "Running under MacOS X" )
-# This check also is TRUE under MacOS X because it falls under the category of Unix-like
-ELSEIF( UNIX )
-	MESSAGE( STATUS "Running under Unix or a Unix-like OS" )
-# The variable is also true for 64-bit versions of Windows
-ELSEIF( WIN32 )
-	MESSAGE( STATUS "Running under Windows (either 32bit or 64bit)" )
-ENDIF()
 
 IF( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "11.1.0" )
 	MESSAGE( STATUS "Not tested on older gcc than 11.1.0" )
 ENDIF()
+
 
 # specify the C++ standard and compilation options
 set(CMAKE_CXX_STANDARD 17)
@@ -34,10 +27,12 @@ if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
 endif()
 add_compile_options(-Wall -Wextra -Wpedantic)
 
+# find_package(doxygen REQUIRED)
+
 # GLOB allows for wildcard additions
 file(GLOB SOURCES "src/*.c")
 
-# Find shared library modbus
+# Find modbus library
 find_path(Modbus_INCLUDE_DIR modbus/modbus.h
 	HINTS
 	/opt/libmodbus/include/
@@ -52,6 +47,8 @@ include_directories(
 
 add_executable(ReadEncoder ${SOURCES})
 target_link_libraries(ReadEncoder ${Modbus_LIBRARIES})
+
+install(TARGETS ReadEncoder DESTINATION bin)
 
 # Allow packaging with "make package"
 if(BUILD_APT_PACKAGES)
