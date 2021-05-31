@@ -27,7 +27,7 @@ if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
 endif()
 add_compile_options(-Wall -Wextra -Wpedantic)
 
-# find_package(doxygen REQUIRED)
+find_package(Doxygen REQUIRED dot)
 
 # GLOB allows for wildcard additions
 file(GLOB SOURCES "src/*.c")
