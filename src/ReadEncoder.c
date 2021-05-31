@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
      switch (opt) 
      {
       case 'h':
-        printf("Reading ecnider for SRT software\n");
+        printf("Reading encoder for SRT software\n");
         break;
       case 'c':
         printf("Trying to connect...\n");
