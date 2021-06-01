@@ -1,9 +1,6 @@
-#include <stdio.h>  /* printf  */
-#include <getopt.h> /* getopt API */
-#include "readEncoder.h"
+#include "main.h"
 
 int main(int argc, char *argv[]) {
-  int opt;
 
   while ((opt = getopt(argc, argv, "hc")) != -1)
   {
@@ -18,4 +15,5 @@ int main(int argc, char *argv[]) {
      }
   }
   return 0;
+
 }

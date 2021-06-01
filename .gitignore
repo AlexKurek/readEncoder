@@ -1,4 +1,11 @@
 # Files
+CMakeCache.txt
+CMakeDoxyfile.in
+CMakeDoxygenDefaults.cmake
+cmake_install.cmake
+ReadEncoder
+Makefile
 
 # Directories
-build/
+build
+CMakeFiles
