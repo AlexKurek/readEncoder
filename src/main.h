@@ -4,6 +4,7 @@
 #include <stdio.h>  /* printf  */
 #include <getopt.h> /* getopt API */
 #include "readEncoder.h"
+#include <stdlib.h>
 
 int opt;
 

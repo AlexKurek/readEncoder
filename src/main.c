@@ -16,18 +16,21 @@ int main(int argc, char *argv[]) {
 	{
 		switch (opt) 
 		{
-		case 'h':
-		{
-			printf("Reading encoder for SRT software\n");
-			break;
-		}
-		case 'c':
-		{
-			int start  = 0;
-			int length = 5;
-			readEncoder(start, length);
-			break;
-		}
+			case 'h':
+			{
+				printf("Reading encoder for SRT software\n");
+				break;
+			}
+			case 'c':
+			{
+				int start  = 0;
+				int length = 5;
+				readEncoder(start, length);
+				break;
+			}
+			default:
+				fprintf(stderr, "Usage: %s [-s] value [-l] value or [-h] for help\n", argv[0]);
+				exit(EXIT_FAILURE);
 		}
 	}
 	return 0;
