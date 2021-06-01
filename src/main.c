@@ -1,3 +1,13 @@
+/** @file main.c
+ *  @brief Main function for the project
+ *
+ *  This file contains the main() function.
+ *
+ *  @author Aleksander Kurek
+ *  @bug No known bugs.
+ */
+
+/* -- Includes -- */
 #include "main.h"
 
 int main(int argc, char *argv[]) {

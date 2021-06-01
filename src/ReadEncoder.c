@@ -1,3 +1,14 @@
+/** @file readEncoder.c
+ *  @brief Reads encoder registers
+ *
+ *  Reading registers
+ *
+ *  @author Fred Hacker (fhacker)
+ *  @bug No known bugs.
+ */
+
+/* -- Includes -- */
+/* Header of this function */
 #include "readEncoder.h"
 
 int readEncoder(void)
@@ -15,10 +26,12 @@ int readEncoder(void)
 		return -1;
 	} 
 
-	/* Read registers from the address in 'start' */
+	/* Read and print registers from the address in 'start' */
 	int read_val = modbus_read_registers(mb, start, length, tab_reg);
-	if(read_val==-1)
+	if(read_val==-1) {
 		printf("ERROR: %s\n", modbus_strerror(errno));
+		return -1;
+	}
 	else {
 		printf("Read registers: %d\n", read_val);
 		for(int i=0; i<length; i++) {
