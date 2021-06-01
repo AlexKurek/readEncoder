@@ -17,11 +17,17 @@ int main(int argc, char *argv[]) {
 		switch (opt) 
 		{
 		case 'h':
+		{
 			printf("Reading encoder for SRT software\n");
 			break;
+		}
 		case 'c':
-			readEncoder();
+		{
+			int start  = 0;
+			int length = 5;
+			readEncoder(start, length);
 			break;
+		}
 		}
 	}
 	return 0;

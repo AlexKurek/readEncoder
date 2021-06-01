@@ -5,6 +5,6 @@
 #include <errno.h>
 #include <stdio.h>
 
-int readEncoder(void);
+int readEncoder(int, int);
 
 #endif

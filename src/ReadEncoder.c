@@ -11,12 +11,10 @@
 /* Header of this function */
 #include "readEncoder.h"
 
-int readEncoder(void)
+int readEncoder(int start, int length)
 {
 	modbus_t *mb;
 	uint16_t tab_reg[32];
-	int start  = 0;
-	int length = 5;
 
 	printf("Trying to connect...\n");
 	mb = modbus_new_tcp("127.0.0.1", 1502);
