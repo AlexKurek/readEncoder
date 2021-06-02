@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 			case 'h':
 			{
 				printf("Reading encoder for SRT software\n");
+				exit(0);
 				break;
 			}
 			case 'c':
