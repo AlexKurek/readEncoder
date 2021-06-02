@@ -10,6 +10,7 @@ Reading encoder module for [SRT: The Small Radio Telescope](https://www.haystack
 * [SRT software](https://www.haystack.mit.edu/haystack-public-outreach/srt-the-small-radio-telescope-for-education/)
 
 ## Installation:
+Example installation commands:
 ```
 mkdir build/
 cd build/
