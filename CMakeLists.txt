@@ -73,21 +73,22 @@ include_directories(
 )
 
 # Find wcslib
-find_path(wcslib_INCLUDE_DIR wcslib/*.h
-	HINTS
-	/opt/wcslib/include/
-)
-find_library(wcslib_LIBRARIES NAMES wcs
-	HINTS
-	/opt/wcslib/lib/
-)
-include_directories(
-	${Modbus_INCLUDE_DIR}/modbus/ ${wcslib_INCLUDE_DIR}/wcslib/
-)
+# find_path(wcslib_INCLUDE_DIR wcslib/*.h
+	# HINTS
+	# /opt/wcslib/include/
+# )
+# find_library(wcslib_LIBRARIES NAMES wcs
+	# HINTS
+	# /opt/wcslib/lib/
+# )
+# include_directories(
+	# ${Modbus_INCLUDE_DIR}/modbus/ ${wcslib_INCLUDE_DIR}/wcslib/
+# )
 
 
 add_executable(ReadEncoder ${SOURCES})
-target_link_libraries(ReadEncoder ${Modbus_LIBRARIES} ${wcslib_LIBRARIES})
+# target_link_libraries(ReadEncoder ${Modbus_LIBRARIES} ${wcslib_LIBRARIES})
+target_link_libraries(ReadEncoder ${Modbus_LIBRARIES})
 
 install(TARGETS ReadEncoder DESTINATION bin)
 
