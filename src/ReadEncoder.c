@@ -17,7 +17,7 @@ int readEncoder(int start, int length)
 	uint16_t tab_reg[32];
 
 	printf("Trying to connect...\n");
-	mb = modbus_new_tcp("127.0.0.1", 1502);
+	mb = modbus_new_rtu("/dev/ttyUSB0", 115200, 'N', 8, 1);   /* modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit) */
 	if (modbus_connect(mb) == -1) {
 		fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
 		modbus_free(mb);
