@@ -11,13 +11,13 @@
 /* Header of this function */
 #include "readEncoder.h"
 
-int readEncoder(int start, int length)
+int readEncoder(int start, int length, const char *dName, int baud, char parity, int data_bit, int stop_bit)
 {
 	modbus_t *mb;
 	uint16_t tab_reg[32];
 
 	printf("Trying to connect...\n");
-	mb = modbus_new_rtu("/dev/ttyUSB0", 115200, 'N', 8, 1);   /* modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit) */
+	mb = modbus_new_rtu(*dName, baud, parity, data_bit, stop_bit);   /* modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit) */
 	if (modbus_connect(mb) == -1) {
 		fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
 		modbus_free(mb);
