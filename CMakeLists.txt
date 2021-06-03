@@ -12,16 +12,14 @@ endif()
 project(ReadEncoder VERSION ${ReadEncoderVERSION})
 
 
-IF( CMAKE_CXX_COMPILER_VERSION VERSION_LESS "11.1.0" )
+IF( CMAKE_C_COMPILER_VERSION VERSION_LESS "11.1.0" )
 	MESSAGE( STATUS "Not tested on older gcc than 11.1.0" )
 ENDIF()
 
 
-# specify the C++ standard and compilation options
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# specify the C standard and compilation options
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-O3 -m64 -march=native" )
+set(CMAKE_C_FLAGS "-O3 -m64 -march=native" )
 if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_options(-DNDEBUG)
 endif()

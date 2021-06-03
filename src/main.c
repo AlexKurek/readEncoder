@@ -66,17 +66,18 @@ int main(int argc, char *argv[]) {
              case 't':
 				stop_bit = atoi(optarg);
 				break;
+             case '?':
+				printf("Wrong options passed\n");
+				print_usage();
+				exit(EXIT_FAILURE);
+				break;
              default:
 				print_usage();
                 exit(EXIT_FAILURE);
         }
     }
 
-    if ( start == -1 || length == -1 || baud == -1 || data_bit == -1 || stop_bit == -1 ) {
-        print_usage();
-        exit(EXIT_FAILURE);
-	}
-	if ((parity != 'N') && (parity != 'E')) {
+	if ((parity != '\0') && (parity != 'N') && (parity != 'E')) {
 		printf("Wrong parity argument value\n");
 		print_usage();
         exit(EXIT_FAILURE);
