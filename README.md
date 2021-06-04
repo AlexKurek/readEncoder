@@ -21,8 +21,15 @@ make install
 
 ## Run:
 ```
-./ReadEncoder
+E.g.:
+./ReadEncoder -s 0 -l 5 -n "/dev/ttyUSB0" -b 115200 -p 'N' -d 8 -t 1
 ```
 Command line options:
-* h for help
-* c for connection attempt
+{"help",       no_argument,       0,  'h' },
+{"start",      required_argument, 0,  's' },
+{"length",     required_argument, 0,  'l' },
+{"deviceName", required_argument, 0,  'n' },
+{"baud",       required_argument, 0,  'b' },
+{"parity",     required_argument, 0,  'p' },
+{"data_bit",   required_argument, 0,  'd' },
+{"stop_bit",   required_argument, 0,  't' },
