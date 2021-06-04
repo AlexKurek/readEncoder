@@ -25,11 +25,11 @@ E.g.:
 ./ReadEncoder -s 0 -l 5 -n "/dev/ttyUSB0" -b 115200 -p 'N' -d 8 -t 1
 ```
 Command line options:
-{"help",       no_argument,       0,  'h' }__
-{"start",      required_argument, 0,  's' }__
-{"length",     required_argument, 0,  'l' }__
-{"deviceName", required_argument, 0,  'n' }__
-{"baud",       required_argument, 0,  'b' }__
-{"parity",     required_argument, 0,  'p' }__
-{"data_bit",   required_argument, 0,  'd' }__
-{"stop_bit",   required_argument, 0,  't' }__
+{"help",       no_argument,       0,  'h' }\
+{"start",      required_argument, 0,  's' }\
+{"length",     required_argument, 0,  'l' }\
+{"deviceName", required_argument, 0,  'n' }\
+{"baud",       required_argument, 0,  'b' }\
+{"parity",     required_argument, 0,  'p' }\
+{"data_bit",   required_argument, 0,  'd' }\
+{"stop_bit",   required_argument, 0,  't' }\
