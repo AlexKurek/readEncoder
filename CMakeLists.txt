@@ -23,7 +23,7 @@ set(CMAKE_C_FLAGS "-O3 -m64 -march=native" )
 if (NOT CMAKE_BUILD_TYPE MATCHES Debug)
     add_compile_options(-DNDEBUG)
 endif()
-add_compile_options(-Wall -Wextra -Wpedantic)
+add_compile_options(-Wall -Wextra -Wpedantic -Wformat=2 -Wno-unused-parameter -Wshadow -Wwrite-strings -Wstrict-prototypes -Wold-style-definition -Wredundant-decls -Wnested-externs -Wmissing-include-dirs -Wjump-misses-init -Wlogical-op) # https://github.com/mcinglis/c-style#always-develop-and-compile-with-all-warnings-and-more-on
 
 
 # first we can indicate the documentation build as an option and set it to ON by default

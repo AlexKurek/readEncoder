@@ -10,8 +10,8 @@
 /* -- Includes -- */
 #include "main.h"
 
-void print_usage() {
-	printf("Usage: [-s] value [-l] value [-n] value [-b] value [-p] value [-d] value [-s] value or [-h] for help\n");
+void print_usage(void) {
+	printf("Usage: [-s] value [-l] value [-n] devName [-b] value [-p] 'N' or 'E' [-d] value [-s] value or [-h] for help\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -32,9 +32,9 @@ int main(int argc, char *argv[]) {
     int   long_index = 0;
 	int   start      = 0;
 	int   length     = 0;
-	char* dName      = '\0';   /* "/dev/ttyUSB0"; */
+	char* dName      = '\0';   // "/dev/ttyUSB0";
 	int   baud       = 0;
-	char  parity     = '\0';   /* 'N'; */
+	char  parity     = '\0';   // 'N';
 	int   data_bit   = 0;
 	int   stop_bit   = 0;
     while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:", long_options, &long_index )) != -1) {
