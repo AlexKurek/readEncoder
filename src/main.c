@@ -82,7 +82,12 @@ int main(int argc, char *argv[]) {
 		print_usage();
         exit(EXIT_FAILURE);
     }
-	if ((start > 0) && (length > 0)) {
+	if (argc == 1) {
+		printf("No options detected\n");
+		print_usage();
+        exit(EXIT_FAILURE);
+	}
+	if ((start >= 0) && (length > 0)) {
 		readEncoder(start, length, dName, baud, parity, data_bit, stop_bit);
 	}
 
