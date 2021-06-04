@@ -43,5 +43,5 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 	modbus_close(mb);
 	modbus_free(mb);
 	
-	return 0;
+	return read_val;
 }
