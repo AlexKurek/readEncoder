@@ -51,25 +51,25 @@ int main(int argc, char *argv[]) {
                 break;
 			 }
              case 's':
-				start    = atoi(optarg); 
+				start     = atoi(optarg); 
                 break;
              case 'l':
-				length   = atoi(optarg);
+				length    = atoi(optarg);
                 break;
              case 'n':
-				dName    = optarg;
+				dName     = optarg;
 				break;
              case 'b':
-				baud     = atoi(optarg);
+				baud      = atoi(optarg);
 				break;
              case 'p':
-				parity   = *optarg;
+				parity    = *optarg;
 				break;
              case 'd':
-				data_bit = atoi(optarg);
+				data_bit  = atoi(optarg);
 				break;
              case 't':
-				stop_bit = atoi(optarg);
+				stop_bit  = atoi(optarg);
 				break;
              case 'a':
 				slaveAddr = atoi(optarg);
@@ -97,8 +97,8 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
 	}
 
-	/* -- Passing inputs to function readEncoder -- */
-	if ((start >= 0) && (length > 0)) {
+	/* -- Pass inputs to function readEncoder -- */
+	if ((start >= 0) && (length > 0) && (*dName != '\0') && (baud > 0) && (data_bit == 5) && (data_bit == 6) && (data_bit == 7) && (data_bit == 8) && (stop_bit == 1) && (stop_bit == 2)) {
 		readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr);
 	}
 
