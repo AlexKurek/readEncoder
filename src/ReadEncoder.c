@@ -16,10 +16,31 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 {
 	modbus_t *mb;
 	uint16_t tab_reg[length]; // The results of reading are stored here
+	struct timeval response_timeout;
+	uint32_t tv_sec = 0;
+	uint32_t tv_usec = 0;
+	response_timeout.tv_sec = 5;
+	response_timeout.tv_usec = 0;
+	float avgVlt = -1;
+	int rc;
 
-	/* create a context for RTU */
+	/* Create a context for RTU */
 	printf("Trying to connect...\n");
-	mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);   // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
+	mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
+	modbus_set_debug(mb, TRUE);                                    // set debug flag of the context
+
+	/* Set slave number in the context */
+	rc = modbus_set_slave(mb, 0);
+	printf("modbus_set_slave return: %d\n",rc);
+	if (rc != 0)
+	{
+		printf("modbus_set_slave: %s \n",modbus_strerror(errno));
+		modbus_close(mb);
+		modbus_free(mb);
+		return -1;
+	}
+
+	/* Establish a Modbus connection */
 	if (modbus_connect(mb) == -1) {
 		fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
 		modbus_close(mb);
@@ -35,14 +56,14 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 	}
 
 	/* Get response timeout */
-	modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
-	printf("Default response timeout:%d sec %d usec \n",tv_sec,tv_usec );
+	modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
+	printf("Default response timeout:%ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
 	/* Set response timeout */
 	// tv_sec = 60;
 	// tv_usec = 0;
-	// modbus_set_response_timeout(ctx, tv_sec,tv_usec); 
-	// modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
+	// modbus_set_response_timeout(mb, tv_sec,tv_usec); 
+	// modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
 	// printf("Set response timeout:%d sec %d usec \n",tv_sec,tv_usec );
 
 	/* Read and print registers from the address in 'start' */
@@ -62,6 +83,9 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 		}
 		printf("\n");
 	}
+
+	avgVlt = modbus_get_float(tab_reg);
+	printf("Average Line to Line Voltage = %f\n", avgVlt);
 
 	/* Closing the context */
 	modbus_close(mb);
