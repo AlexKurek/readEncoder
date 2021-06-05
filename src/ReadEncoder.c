@@ -34,6 +34,17 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 		return -1;
 	}
 
+	/* Get response timeout */
+	modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
+	printf("Default response timeout:%d sec %d usec \n",tv_sec,tv_usec );
+
+	/* Set response timeout */
+	// tv_sec = 60;
+	// tv_usec = 0;
+	// modbus_set_response_timeout(ctx, tv_sec,tv_usec); 
+	// modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
+	// printf("Set response timeout:%d sec %d usec \n",tv_sec,tv_usec );
+
 	/* Read and print registers from the address in 'start' */
 	printf("Created modbus context\n");
 	int read_val = modbus_read_registers(mb, start, length, tab_reg);
