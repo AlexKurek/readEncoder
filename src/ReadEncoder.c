@@ -12,7 +12,7 @@
 #include "readEncoder.h"
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr)
 {
 	modbus_t *mb;
 	uint16_t tab_reg[length]; // The results of reading are stored here
@@ -30,7 +30,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 	modbus_set_debug(mb, TRUE);                                    // set debug flag of the context
 
 	/* Set slave number in the context */
-	rc = modbus_set_slave(mb, 0);
+	rc = modbus_set_slave(mb, slaveAddr);
 	printf("modbus_set_slave return: %d\n",rc);
 	if (rc != 0)
 	{
