@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* -- Pass inputs to function readEncoder -- */
-	if ((start >= 0) && (length > 0) && (*dName != '\0') && (baud > 0) && (data_bit == 5) && (data_bit == 6) && (data_bit == 7) && (data_bit == 8) && (stop_bit == 1) && (stop_bit == 2)) {
+	if ((start >= 0) && (length > 0) && (*dName != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ((stop_bit == 1) || (stop_bit == 2))) {
 		readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr);
 	}
 
