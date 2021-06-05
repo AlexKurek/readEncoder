@@ -10,33 +10,36 @@
 /* -- Includes -- */
 #include "main.h"
 
+/* -- Printing usage -- */
 void print_usage(void) {
 	printf("Usage: [-s] value [-l] value [-n] devName [-b] value [-p] 'N' or 'E' [-d] value [-s] value or [-h] for help\n");
 }
 
 int main(int argc, char *argv[]) {
 
-	/* -- Parsing inputs -- */
+	/* -- Defining inputs -- */
     static struct option long_options[] = {
         {"help",       no_argument,       0,  'h' },
-        {"start",      required_argument, 0,  's' },
-        {"length",     required_argument, 0,  'l' },
-		{"deviceName", required_argument, 0,  'n' },
-		{"baud",       required_argument, 0,  'b' },
-		{"parity",     required_argument, 0,  'p' },
-		{"data_bit",   required_argument, 0,  'd' },
-		{"stop_bit",   required_argument, 0,  't' },
+        {"start",      required_argument, 0,  's' },  // where to start reading
+        {"length",     required_argument, 0,  'l' },  // how many registers to read
+		{"deviceName", required_argument, 0,  'n' },  // e.g. "/dev/ttyS0" or "/dev/ttyUSB0"
+		{"baud",       required_argument, 0,  'b' },  // bps
+		{"parity",     required_argument, 0,  'p' },  // 'N', 'P' or 'O'
+		{"data_bit",   required_argument, 0,  'd' },  // number of bits of data, the allowed values are 5, 6, 7 and 8
+		{"stop_bit",   required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2
         {0,            0,                 0,   0  }
     };
 
     int   long_index = 0;
 	int   start      = 0;
 	int   length     = 0;
-	char* dName      = '\0';   // "/dev/ttyUSB0";
+	char* dName      = '\0';
 	int   baud       = 0;
-	char  parity     = '\0';   // 'N';
+	char  parity     = '\0';
 	int   data_bit   = 0;
 	int   stop_bit   = 0;
+	
+	/* -- Parsing inputs -- */
     while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:", long_options, &long_index )) != -1) {
         switch (opt) {
              case 'h' :
@@ -77,7 +80,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
-	if ((parity != '\0') && (parity != 'N') && (parity != 'E')) {
+	/* -- Veryying inputs -- */
+	if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O')) {
 		printf("Wrong parity argument value\n");
 		print_usage();
         exit(EXIT_FAILURE);
@@ -87,6 +91,8 @@ int main(int argc, char *argv[]) {
 		print_usage();
         exit(EXIT_FAILURE);
 	}
+
+	/* -- Passing inputs to function readEncoder -- */
 	if ((start >= 0) && (length > 0)) {
 		readEncoder(start, length, dName, baud, parity, data_bit, stop_bit);
 	}
