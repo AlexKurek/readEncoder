@@ -12,7 +12,7 @@
 
 /* -- Printing usage -- */
 void print_usage(void) {
-	printf("Usage: [-s] value [-l] value [-n] devName [-b] value [-p] 'N' or 'E' [-d] value [-s] value [-a] value or [-h] for help\n");
+	printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N' or 'E' [-d] value [-s] value [-a] value or [-h] for help\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
         {"help",       no_argument,       0,  'h' },
         {"start",      required_argument, 0,  's' },  // where to start reading
         {"length",     required_argument, 0,  'l' },  // how many registers to read
-		{"deviceName", required_argument, 0,  'n' },  // e.g. "/dev/ttyS0" or "/dev/ttyUSB0"
+		{"deviceName", required_argument, 0,  'n' },  // e.g. "ttyUSB0" for /dev/ttyUSB0
 		{"baud",       required_argument, 0,  'b' },  // [bps]
 		{"parity",     required_argument, 0,  'p' },  // 'N', 'P' or 'O'
 		{"data_bit",   required_argument, 0,  'd' },  // number of bits of data, the allowed values are 5, 6, 7 and 8
@@ -34,7 +34,8 @@ int main(int argc, char *argv[]) {
     int   long_index = 0;
 	int   start      = 0;
 	int   length     = 0;
-	char* dName      = '\0';
+	char dName[11]   = "/dev/";
+	char* dNameShort = '\0';
 	int   baud       = 0;
 	char  parity     = '\0';
 	int   data_bit   = 0;
@@ -51,28 +52,28 @@ int main(int argc, char *argv[]) {
                 break;
 			 }
              case 's':
-				start     = atoi(optarg); 
+				start      = atoi(optarg); 
                 break;
              case 'l':
-				length    = atoi(optarg);
+				length     = atoi(optarg);
                 break;
              case 'n':
-				dName     = optarg;
+				dNameShort = optarg;
 				break;
              case 'b':
-				baud      = atoi(optarg);
+				baud       = atoi(optarg);
 				break;
              case 'p':
-				parity    = *optarg;
+				parity     = *optarg;
 				break;
              case 'd':
-				data_bit  = atoi(optarg);
+				data_bit   = atoi(optarg);
 				break;
              case 't':
-				stop_bit  = atoi(optarg);
+				stop_bit   = atoi(optarg);
 				break;
              case 'a':
-				slaveAddr = atoi(optarg);
+				slaveAddr  = atoi(optarg);
 				break;
              case '?':
 				printf("Wrong options passed\n");
@@ -98,7 +99,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	/* -- Pass inputs to function readEncoder -- */
-	if ((start >= 0) && (length > 0) && (*dName != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ((stop_bit == 1) || (stop_bit == 2))) {
+	if ((start >= 0) && (length > 0) && (*dNameShort != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ((stop_bit == 1) || (stop_bit == 2))) {
+		strcat(dName, dNameShort);
 		readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr);
 	}
 

@@ -5,6 +5,7 @@
 #include <getopt.h> /* getopt API */
 #include "readEncoder.h"
 #include <stdlib.h>
+#include <string.h>
 
 int opt;
 
