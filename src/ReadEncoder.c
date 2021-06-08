@@ -15,11 +15,11 @@
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr)
 {
 	modbus_t *mb;
-	uint16_t tab_reg[length]; // The results of reading are stored here
+	uint16_t tab_reg[length];     // The results of reading are stored here
 	struct timeval response_timeout;
 	uint32_t tv_sec = 0;
 	uint32_t tv_usec = 0;
-	response_timeout.tv_sec = 5;
+	response_timeout.tv_sec = 5;  // defaults
 	response_timeout.tv_usec = 0;
 	float avgVlt = -1;
 	int rc;
@@ -54,6 +54,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 		modbus_free(mb);
 		return -1;
 	}
+	printf("Created modbus context\n");
 
 	/* Get response timeout */
 	modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
@@ -66,8 +67,9 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 	// modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
 	// printf("Set response timeout:%d sec %d usec \n",tv_sec,tv_usec );
 
+    modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
+
 	/* Read and print registers from the address in 'start' */
-	printf("Created modbus context\n");
 	int read_val = modbus_read_registers(mb, start, length, tab_reg);
 	if(read_val==-1) {
 		printf("ERROR: %s\n", modbus_strerror(errno));

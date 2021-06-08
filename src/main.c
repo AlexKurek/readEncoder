@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     int   long_index = 0;
 	int   start      = 0;
 	int   length     = 0;
-	char dName[11]   = "/dev/";
+	char  dName[12]  = "/dev/"; // 12 for e.g. /dev/ttyUSB0
 	char* dNameShort = '\0';
 	int   baud       = 0;
 	char  parity     = '\0';
