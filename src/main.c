@@ -15,7 +15,8 @@ void print_usage(void) {
     printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value or [-h] for help\n");
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
     /* -- Defining inputs -- */
     static struct option long_options[] = {
@@ -43,8 +44,10 @@ int main(int argc, char *argv[]) {
     int   slaveAddr  = 0;
     
     /* -- Parsing inputs -- */
-    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:", long_options, &long_index )) != -1) {
-        switch (opt) {
+    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:", long_options, &long_index )) != -1)
+    {
+        switch (opt)
+        {
              case 'h' :
              {
                 printf("Reading encoder for SRT software\n");
@@ -87,26 +90,27 @@ int main(int argc, char *argv[]) {
     }
 
     /* -- Veryying inputs -- */
-    if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O')) {
+    if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O'))
+    {
         printf("Wrong parity argument value\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
-    if (argc == 1) {
+    if (argc == 1)
+    {
         printf("No options detected\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
-    if(strstr(dNameInp, "/dev/") == NULL) {
+    if (strstr(dNameInp, "/dev/") == NULL)
+    {
         strcat(dName, dNameInp);
         printf("Short device name in input, expanding it to: %s\n", dName);
     }
 
     /* -- Pass inputs to function readEncoder -- */
-    if ((start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ((stop_bit == 1) || (stop_bit == 2))) {
+    if ( (start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
         readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr);
-    }
 
     return 0;
-
 }

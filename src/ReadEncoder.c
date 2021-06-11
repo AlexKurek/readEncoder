@@ -41,7 +41,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
 
     /* Establish a Modbus connection */
-    if (modbus_connect(mb) == -1) {
+    if (modbus_connect(mb) == -1)
+    {
         fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
         modbus_close(mb);
         modbus_free(mb);
@@ -71,18 +72,19 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Read and print registers from the address in 'start' */
     int read_val = modbus_read_registers(mb, start, length, tab_reg);
-    if(read_val==-1) {
+    if(read_val==-1)
+    {
         printf("ERROR: %s\n", modbus_strerror(errno));
         modbus_close(mb);
         modbus_free(mb);
         return -1;
     }
-    else {
+    else
+    {
         printf("Modbus server connected successfully\n");
         printf("Read registers: %d\n", read_val);
-        for(int i=0; i<length; i++) {
+        for(int i=0; i<length; i++)
             printf("%d ", tab_reg[i]);
-        }
         printf("\n");
     }
 
