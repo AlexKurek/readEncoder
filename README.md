@@ -24,6 +24,18 @@ E.g.:
 ```
 ./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127
 ```
+or the same in longer version:
+```
+./ReadEncoder --start 1 \
+              --length 2 \
+              --deviceName "ttyUSB0" \
+              --baud 19200 \
+              --parity 'E' \
+              --data_bit 8 \
+              --stop_bit 1 \
+              --slave_ad 127
+```
+
 Command line options:\
 {"help",       no_argument,       0,  'h' }\
 {"start",      required_argument, 0,  's' }\
