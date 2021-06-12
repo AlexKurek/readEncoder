@@ -17,14 +17,14 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_t *mb;
     uint16_t tab_reg[length];     // The results of reading are stored here
     struct timeval response_timeout;
-    uint32_t tv_sec = 0;
+    uint32_t tv_sec  = 0;
     uint32_t tv_usec = 0;
-    response_timeout.tv_sec = 5;  // defaults
+    response_timeout.tv_sec  = 5;  // defaults
     response_timeout.tv_usec = 0;
     int rc;
 
     /* Create a context for RTU */
-	printf("\n");
+    printf("\n");
     printf("Trying to connect...\n");
     mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
     modbus_set_debug(mb, TRUE);                                    // set debug flag of the context
@@ -71,6 +71,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
 
     /* Read and print registers from the address in 'start' */
+    printf("Trying to read the registers\n");
     int read_val = modbus_read_registers(mb, start, length, tab_reg);
     if(read_val==-1)
     {
