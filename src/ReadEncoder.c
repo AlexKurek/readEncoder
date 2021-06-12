@@ -94,6 +94,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 			double posDeg = ( posRegister / 65536 ) * 360;
 			printf("Position is among read registers. In degrees: %f\n", posDeg);
 		}
+		else
+			printf("Position is not among read registers\n");
     }
 
     /* Closing the context */
