@@ -32,4 +32,5 @@ Command line options:\
 {"baud",       required_argument, 0,  'b' }\
 {"parity",     required_argument, 0,  'p' }\
 {"data_bit",   required_argument, 0,  'd' }\
-{"stop_bit",   required_argument, 0,  't' }
+{"stop_bit",   required_argument, 0,  't' }\
+{"slave_ad",   required_argument, 0,  'a' }
