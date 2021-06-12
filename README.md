@@ -34,8 +34,8 @@ or the same in longer version:
               --data_bit 8 \
               --stop_bit 1 \
               --slave_ad 127 \
-			  --timeout_sec  1 \
-			  --timeout_usec 0
+              --timeout_sec  1 \
+              --timeout_usec 0
 ```
 
 Command line options:\
@@ -49,4 +49,4 @@ Command line options:\
 {"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
 {"slave_ad",     required_argument, 0,  'a' },  // slave address\
 {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
-{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part\
+{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
