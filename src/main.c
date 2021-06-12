@@ -46,13 +46,13 @@ int main(int argc, char *argv[])
     int      slaveAddr   = 0;
     uint32_t resTimeSec  = 0;
     uint32_t resTimeuSec = 0;
-	bool     optionsDone = false;
+    bool     optionsDone = false;
 
 
     /* -- Parsing inputs -- */
     while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:", long_options, &long_index )) != -1)
     {
-		optionsDone = true;
+        optionsDone = true;
         switch (opt)
         {
              case 'h' :
