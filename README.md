@@ -22,7 +22,7 @@ make install
 ## Run:
 E.g.:
 ```
-./ReadEncoder -s 0 -l 5 -n "ttyUSB0" -b 115200 -p 'N' -d 8 -t 1 -a 0
+./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127
 ```
 Command line options:\
 {"help",       no_argument,       0,  'h' }\
