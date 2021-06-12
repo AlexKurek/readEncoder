@@ -12,15 +12,13 @@
 #include "readEncoder.h"
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t tv_sec, uint32_t tv_usec)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec)
 {
     modbus_t *mb;
     uint16_t tab_reg[length];     // The results of reading are stored here
     struct timeval response_timeout;
-    // uint32_t tv_sec  = 0;
-    // uint32_t tv_usec = 0;
-    // response_timeout.tv_sec  = 0;  // defaults
-    // response_timeout.tv_usec = 500;
+    uint32_t tv_sec  = 0;         // defaults
+    uint32_t tv_usec = 500;
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
     int rc;
@@ -64,9 +62,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Default response timeout: %ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
     /* Set response timeout */
-    // tv_sec  = 1;
-    // tv_usec = 0;
-    modbus_set_response_timeout(mb, tv_sec, tv_usec); 
+    modbus_set_response_timeout(mb, resTimeSec, resTimeuSec); 
     modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 

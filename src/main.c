@@ -12,7 +12,7 @@
 
 /* -- Printing usage -- */
 void print_usage(void) {
-    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value or [-h] for help\n");
+    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value  or [-h] for help\n");
 }
 
 int main(int argc, char *argv[])
@@ -34,18 +34,18 @@ int main(int argc, char *argv[])
         {0,              0,                 0,   0  }
     };
 
-    int      long_index = 0;
-    int      start      = 0;
-    int      length     = 0;
-    char     dName[12]  = "/dev/"; // 12 for e.g. /dev/ttyUSB0
-    char*    dNameInp   = '\0';
-    int      baud       = 0;
-    char     parity     = '\0';
-    int      data_bit   = 0;
-    int      stop_bit   = 0;
-    int      slaveAddr  = 0;
-    uint32_t tv_sec     = 0;
-    uint32_t tv_usec    = 0;
+    int      long_index  = 0;
+    int      start       = 0;
+    int      length      = 0;
+    char     dName[12]   = "/dev/"; // 12 for e.g. /dev/ttyUSB0
+    char*    dNameInp    = '\0';
+    int      baud        = 0;
+    char     parity      = '\0';
+    int      data_bit    = 0;
+    int      stop_bit    = 0;
+    int      slaveAddr   = 0;
+    uint32_t resTimeSec  = 0;
+    uint32_t resTimeuSec = 0;
 
 
     /* -- Parsing inputs -- */
@@ -60,34 +60,34 @@ int main(int argc, char *argv[])
                 break;
              }
              case 's':
-                start     = atoi(optarg); 
+                start       = atoi(optarg); 
                 break;
              case 'l':
-                length    = atoi(optarg);
+                length      = atoi(optarg);
                 break;
              case 'n':
-                dNameInp  = optarg;
+                dNameInp    = optarg;
                 break;
              case 'b':
-                baud      = atoi(optarg);
+                baud        = atoi(optarg);
                 break;
              case 'p':
-                parity    = *optarg;
+                parity      = *optarg;
                 break;
              case 'd':
-                data_bit  = atoi(optarg);
+                data_bit    = atoi(optarg);
                 break;
              case 't':
-                stop_bit  = atoi(optarg);
+                stop_bit    = atoi(optarg);
                 break;
              case 'a':
-                slaveAddr = atoi(optarg);
+                slaveAddr   = atoi(optarg);
                 break;
              case 'e':
-                tv_sec    = atoi(optarg);
+                resTimeSec  = atoi(optarg);
                 break;
              case 'u':
-                tv_usec   = atoi(optarg);
+                resTimeuSec = atoi(optarg);
                 break;
              case '?':
              {
@@ -97,8 +97,10 @@ int main(int argc, char *argv[])
                 break;
              }
              default:
+             {
                 print_usage();
                 exit(EXIT_FAILURE);
+             }
         }
     }
 
@@ -109,7 +111,7 @@ int main(int argc, char *argv[])
         print_usage();
         exit(EXIT_FAILURE);
     }
-    if (tv_sec + tv_usec == 0)
+    if (resTimeSec + resTimeuSec == 0)
     {
         printf("Response time can't be == 0\n");
         exit(EXIT_FAILURE);
@@ -128,7 +130,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, tv_sec, tv_usec);
+        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec);
 
     return 0;
 }
