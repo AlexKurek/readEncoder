@@ -83,7 +83,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
     else
     {
-        printf("Modbus server connected successfully\n");
+        printf("Got data from the encoder\n");
         printf("Read registers: %d\n", read_val);
         for(int i=0; i<length; i++)
             printf("%d ", tab_reg[i]);
