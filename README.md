@@ -22,7 +22,7 @@ make install
 ## Run:
 E.g.:
 ```
-./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127
+./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0
 ```
 or the same in longer version:
 ```
@@ -33,16 +33,20 @@ or the same in longer version:
               --parity 'E' \
               --data_bit 8 \
               --stop_bit 1 \
-              --slave_ad 127
+              --slave_ad 127 \
+			  --timeout_sec  1 \
+			  --timeout_usec 0
 ```
 
 Command line options:\
-{"help",       no_argument,       0,  'h' }\
-{"start",      required_argument, 0,  's' }\
-{"length",     required_argument, 0,  'l' }\
-{"deviceName", required_argument, 0,  'n' }\
-{"baud",       required_argument, 0,  'b' }\
-{"parity",     required_argument, 0,  'p' }\
-{"data_bit",   required_argument, 0,  'd' }\
-{"stop_bit",   required_argument, 0,  't' }\
-{"slave_ad",   required_argument, 0,  'a' }
+{"help",         no_argument,       0,  'h' },
+{"start",        required_argument, 0,  's' },  // where to start reading\
+{"length",       required_argument, 0,  'l' },  // how many registers to read\
+{"deviceName",   required_argument, 0,  'n' },  // e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"\
+{"baud",         required_argument, 0,  'b' },  // [bps]\
+{"parity",       required_argument, 0,  'p' },  // 'N', 'E' or 'O'\
+{"data_bit",     required_argument, 0,  'd' },  // number of bits of data, the allowed values are 5, 6, 7 and 8\
+{"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
+{"slave_ad",     required_argument, 0,  'a' },  // slave address\
+{"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
+{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part\
