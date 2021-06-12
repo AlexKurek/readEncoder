@@ -68,7 +68,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     // modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
     // printf("Set response timeout:%d sec %d usec \n",tv_sec,tv_usec );
 
-	printf("Setting error recovery mode\n");
+    printf("Setting error recovery mode\n");
     modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
 
     /* Read and print registers from the address in 'start' */
@@ -88,14 +88,14 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         for(int i=0; i<length; i++)
             printf("%d ", tab_reg[i]);
         printf("\n");
-		if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 is in range
-		{
-			double posRegister = tab_reg[1];
-			double posDeg = ( posRegister / 65536 ) * 360;
-			printf("Position is among read registers. In degrees: %f\n", posDeg);
-		}
-		else
-			printf("Position is not among read registers\n");
+        if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) is in range
+        {
+            double posRegister = tab_reg[1];
+            double posDeg = ( posRegister / 65536 ) * 360;
+            printf("Position is among read registers. In degrees: %f\n", posDeg);
+        }
+        else
+            printf("Position is not among read registers\n");
     }
 
     /* Closing the context */
