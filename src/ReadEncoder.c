@@ -86,7 +86,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         for(int i=0; i<length; i++)
             printf("%d ", tab_reg[i]);
         printf("\n");
-        if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) is in range
+        if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
         {
             double posRegister = tab_reg[1];
             double posDeg = ( posRegister / 65536 ) * 360;

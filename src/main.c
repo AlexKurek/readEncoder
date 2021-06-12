@@ -46,11 +46,13 @@ int main(int argc, char *argv[])
     int      slaveAddr   = 0;
     uint32_t resTimeSec  = 0;
     uint32_t resTimeuSec = 0;
+	bool     optionsDone = false;
 
 
     /* -- Parsing inputs -- */
     while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:", long_options, &long_index )) != -1)
     {
+		optionsDone = true;
         switch (opt)
         {
              case 'h' :
@@ -91,7 +93,7 @@ int main(int argc, char *argv[])
                 break;
              case '?':
              {
-                printf("Wrong options passed\n");
+                printf("Wrong option(s) passed\n");
                 print_usage();
                 exit(EXIT_FAILURE);
                 break;
@@ -104,14 +106,14 @@ int main(int argc, char *argv[])
         }
     }
 
-    /* -- Veryying inputs -- */
+    /* -- Verifying inputs -- */
     if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O'))
     {
         printf("Wrong parity argument value\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
-    if (resTimeSec + resTimeuSec == 0)
+    if ((resTimeSec + resTimeuSec == 0) && (optionsDone == true))
     {
         printf("Response time can't be == 0\n");
         exit(EXIT_FAILURE);
