@@ -12,7 +12,7 @@
 
 /* -- Printing usage -- */
 void print_usage(void) {
-    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value  or [-h] for help\n");
+    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value [-o] value [-r] value  or [-h] for help\n");
 }
 
 int main(int argc, char *argv[])
@@ -31,6 +31,8 @@ int main(int argc, char *argv[])
         {"slave_ad",     required_argument, 0,  'a' },  // slave address
         {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]
         {"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
+        {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = inf
+        {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
         {0,              0,                 0,   0  }
     };
 
@@ -47,10 +49,12 @@ int main(int argc, char *argv[])
     uint32_t resTimeSec  = 0;
     uint32_t resTimeuSec = 0;
     bool     optionsDone = false;
+    int      loops       = 0;
+    int      repTime     = 0;
 
 
     /* -- Parsing inputs -- */
-    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:", long_options, &long_index )) != -1)
+    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:", long_options, &long_index )) != -1)
     {
         optionsDone = true;
         switch (opt)
@@ -90,6 +94,12 @@ int main(int argc, char *argv[])
                 break;
              case 'u':
                 resTimeuSec = atoi(optarg);
+                break;
+             case 'o':
+                loops       = atoi(optarg);
+                break;
+             case 'r':
+                repTime     = atoi(optarg);
                 break;
              case '?':
              {
@@ -132,7 +142,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec);
+        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime);
 
     return 0;
 }

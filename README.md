@@ -22,7 +22,7 @@ make install
 ## Run:
 E.g.:
 ```
-./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0
+./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0 -o 1 -r 0
 ```
 or the same in longer version:
 ```
@@ -35,7 +35,9 @@ or the same in longer version:
               --stop_bit 1 \
               --slave_ad 127 \
               --timeout_sec  1 \
-              --timeout_usec 0
+              --timeout_usec 0 \
+              --loops 1 \
+              --repTime 0
 ```
 
 Command line options:\
@@ -49,4 +51,6 @@ Command line options:\
 {"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
 {"slave_ad",     required_argument, 0,  'a' },  // slave address\
 {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
-{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
+{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part\
+{"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = inf\
+{"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
