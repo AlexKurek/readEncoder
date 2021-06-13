@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         {"slave_ad",     required_argument, 0,  'a' },  // slave address
         {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]
         {"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
-        {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = inf
+        {"loops",        required_argument, 0,  'o' },  // how many loops of reading
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
         {0,              0,                 0,   0  }
     };

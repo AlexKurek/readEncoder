@@ -69,36 +69,43 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Setting error recovery mode\n");
     modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
 
+
     /* Read and print registers from the address in 'start' */
-    printf("Trying to read the registers\n");
-    int read_val = modbus_read_registers (mb, start, length, tab_reg);
-    if(read_val==-1)
+    for (int j=0; j<loops; j++)
     {
-        printf("ERROR: %s\n", modbus_strerror(errno));
-        modbus_close(mb);
-        modbus_free(mb);
-        return -1;
-    }
-    else
-    {
-        printf("Got data from the encoder\n");
-        printf("Read registers: %d\n", read_val);
-        for(int i=0; i<length; i++)
-            printf("%d ", tab_reg[i]);
-        printf("\n");
-        if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
-        {
-            double posRegister = tab_reg[1];
-            double posDeg = ( posRegister / 65536 ) * 360;
-            printf("Position is among read registers. In degrees: %f\n", posDeg);
-        }
+		if (loops == 1)
+			printf("Trying to read the registers...\n");
+		else
+		{
+			int k = j+1;
+			printf("( %d / %d ) Trying to read the registers...\n", k, loops);
+		}
+        int read_val = modbus_read_registers (mb, start, length, tab_reg);
+        if (read_val == -1)
+            printf("ERROR: %s\n", modbus_strerror(errno));
         else
-            printf("Position is not among read registers\n");
+        {
+            printf("Got data from the encoder\n");
+            printf("Read registers: %d\n", read_val);
+            for(int i=0; i<length; i++)
+                printf("%d ", tab_reg[i]);
+            printf("\n");
+            if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+            {
+                double posRegister = tab_reg[1];
+                double posDeg = ( posRegister / 65536 ) * 360;
+                printf("Position is among read registers. In degrees: %f\n", posDeg);
+            }
+            else
+                printf("Position is not among read registers\n");
+        }
+        sleep (repTime);
     }
+
 
     /* Closing the context */
     modbus_close(mb);
     modbus_free(mb);
     
-    return read_val;
+    return 0;
 }
