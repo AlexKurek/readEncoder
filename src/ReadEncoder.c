@@ -15,9 +15,9 @@
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
 {
     modbus_t *mb;
-    uint16_t tab_reg[length];     // The results of reading are stored here
+    uint16_t tab_reg[length];         // The results of reading are stored here
     struct timeval response_timeout;
-    uint32_t tv_sec  = 0;         // defaults
+    uint32_t tv_sec  = 0;             // defaults
     uint32_t tv_usec = 500;
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
