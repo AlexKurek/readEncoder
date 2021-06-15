@@ -1,7 +1,7 @@
 /** @file readEncoder.c
  *  @brief Reads encoder registers
  *
- *  Reading registers
+ *  Reading encopder registers via modbus protocol
  *
  *  @author Aleksander Kurek
  *  @bug No known bugs
@@ -12,7 +12,7 @@
 #include "readEncoder.h"
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
 {
     modbus_t *mb;
     uint16_t tab_reg[length];     // The results of reading are stored here
@@ -27,7 +27,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("\n");
     printf("Trying to connect...\n");
     mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
-    modbus_set_debug(mb, TRUE);                                    // set debug flag of the context
+    if (debug == true)
+        modbus_set_debug(mb, TRUE);                                // set debug flag of the context
 
     /* Set slave number in the context */
     rc = modbus_set_slave(mb, slaveAddr);
@@ -66,20 +67,23 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
-    printf("Setting error recovery mode\n");
-    modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
+    if (recovery == true)
+    {
+        printf("Setting error recovery mode\n");
+        modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
+    }
 
 
     /* Read and print registers from the address in 'start' */
     for (int j=0; j<loops; j++)
     {
-		if (loops == 1)
-			printf("Trying to read the registers...\n");
-		else
-		{
-			int k = j+1;
-			printf("( %d / %d ) Trying to read the registers...\n", k, loops);
-		}
+        if (loops == 1)
+            printf("Trying to read the registers...\n");
+        else
+        {
+            int k = j+1;
+            printf("( %d / %d ) Trying to read the registers...\n", k, loops);
+        }
         int read_val = modbus_read_registers (mb, start, length, tab_reg);
         if (read_val == -1)
             printf("ERROR: %s\n", modbus_strerror(errno));

@@ -12,7 +12,7 @@
 
 /* -- Printing usage -- */
 void print_usage(void) {
-    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value [-o] value [-r] value  or [-h] for help\n");
+    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value [-o] value [-r] value [-c] value [-g] value  or [-h] for help\n");
 }
 
 int main(int argc, char *argv[])
@@ -33,6 +33,8 @@ int main(int argc, char *argv[])
         {"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
+        {"recovery",     required_argument, 0,  'c' },  // error recovery mode
+        {"debug",        required_argument, 0,  'g' },  // debug mode
         {0,              0,                 0,   0  }
     };
 
@@ -51,10 +53,12 @@ int main(int argc, char *argv[])
     bool     optionsDone = false;
     int      loops       = 0;
     int      repTime     = 0;
+    bool     recovery    = false;
+    bool     debug       = false;
 
 
     /* -- Parsing inputs -- */
-    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:", long_options, &long_index )) != -1)
+    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1)
     {
         optionsDone = true;
         switch (opt)
@@ -101,6 +105,12 @@ int main(int argc, char *argv[])
              case 'r':
                 repTime     = atoi(optarg);
                 break;
+             case 'c':
+                recovery    = atoi(optarg);
+                break;
+             case 'g':
+                debug       = atoi(optarg);
+                break;
              case '?':
              {
                 printf("Wrong option(s) passed\n");
@@ -142,7 +152,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime);
+        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug);
 
     return 0;
 }

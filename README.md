@@ -22,7 +22,7 @@ make install
 ## Run:
 E.g.:
 ```
-./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0 -o 1 -r 0
+./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0 -o 1 -r 0 -c 1 -g 1
 ```
 or the same in longer version:
 ```
@@ -37,7 +37,9 @@ or the same in longer version:
               --timeout_sec  1 \
               --timeout_usec 0 \
               --loops 1 \
-              --repTime 0
+              --repTime 0 \
+              --recovery true \
+              --debug true
 ```
 
 Command line options:\
@@ -52,5 +54,7 @@ Command line options:\
 {"slave_ad",     required_argument, 0,  'a' },  // slave address\
 {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
 {"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part\
-{"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = inf\
-{"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
+{"loops",        required_argument, 0,  'o' },  // how many loops of reading
+{"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
+{"recovery",     required_argument, 0,  'c' },  // error recovery mode. Deefault = false\
+{"debug",        required_argument, 0,  'g' },  // debug mode. Deefault = false
