@@ -27,7 +27,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("\n");
     printf("Trying to connect...\n");
     mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
-    if (debug == true)
+    if (debug)
         modbus_set_debug(mb, TRUE);                                // set debug flag of the context
 
     /* Set slave number in the context */
@@ -67,7 +67,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
-    if (recovery == true)
+    if (recovery)
     {
         printf("Setting error recovery mode\n");
         modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);

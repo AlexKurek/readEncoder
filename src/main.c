@@ -89,10 +89,10 @@ int main(int argc, char *argv[])
                 repTime     = atoi(optarg);
                 break;
              case 'c':
-                recovery    = atoi(optarg);
+                recovery    = *optarg;
                 break;
              case 'g':
-                debug       = atoi(optarg);
+                debug       = *optarg;
                 break;
              case '?':
              {
