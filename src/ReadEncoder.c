@@ -28,14 +28,25 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Trying to connect...\n");
     mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
     if (debug)
+	{
         modbus_set_debug(mb, TRUE);                                // set debug flag of the context
+		printf("Entered debud moge\n");
+		int getRTS = modbus_rtu_get_rts(mb);
+		printf("Return of get_rts:           %d\n", getRTS);    // why 0? https://libmodbus.org/docs/v3.1.6/modbus_rtu_get_rts.html
+		int getSerial = modbus_rtu_get_serial_mode(mb);
+		printf("Return of get_serial_mode:   %d\n", getSerial); // why 0? https://libmodbus.org/docs/v3.0.8/modbus_rtu_get_serial_mode.html
+		int getDelay = modbus_rtu_get_rts_delay(mb);
+		printf("Return of get_rts_delay:     %d\n", getDelay);
+		int getHeader = modbus_get_header_length(mb);
+		printf("Return of get_header_length: %d\n", getHeader);
+	}
 
     /* Set slave number in the context */
     rc = modbus_set_slave(mb, slaveAddr);
-    printf("modbus_set_slave return: %d\n",rc);
+    printf("modbus_set_slave return: %d\n", rc);
     if (rc != 0)
     {
-        printf("modbus_set_slave: %s \n",modbus_strerror(errno));
+        printf("modbus_set_slave: %s \n", modbus_strerror(errno));
         modbus_close(mb);
         modbus_free(mb);
         return -1;
@@ -106,10 +117,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         sleep (repTime);
     }
 
-
     /* Closing the context */
     modbus_close(mb);
     modbus_free(mb);
-    
     return 0;
 }
