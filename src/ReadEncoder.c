@@ -32,9 +32,14 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         modbus_set_debug(mb, TRUE);                                // set debug flag of the context
 		printf("Entered debud moge\n");
 		int getRTS = modbus_rtu_get_rts(mb);
-		printf("Return of get_rts:           %d\n", getRTS);    // why 0? https://libmodbus.org/docs/v3.1.6/modbus_rtu_get_rts.html
+		printf("Return of get_rts:           %d\n", getRTS);
+		printf("Return of RTU_RTS_NONE:      %d\n", MODBUS_RTU_RTS_NONE);
+		printf("Return of RTU_RTS_UP:        %d\n", MODBUS_RTU_RTS_UP);
+		printf("Return of RTU_RTS_DOWN:      %d\n", MODBUS_RTU_RTS_DOWN);
 		int getSerial = modbus_rtu_get_serial_mode(mb);
-		printf("Return of get_serial_mode:   %d\n", getSerial); // why 0? https://libmodbus.org/docs/v3.0.8/modbus_rtu_get_serial_mode.html
+		printf("Return of get_serial_mode:   %d\n", getSerial);
+		printf("Return of RTU_RS232:         %d\n", MODBUS_RTU_RS232);
+		printf("Return of RTU_RS485:         %d\n", MODBUS_RTU_RS485);
 		int getDelay = modbus_rtu_get_rts_delay(mb);
 		printf("Return of get_rts_delay:     %d\n", getDelay);
 		int getHeader = modbus_get_header_length(mb);
