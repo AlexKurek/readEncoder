@@ -10,6 +10,9 @@
 /* -- Includes -- */
 #include "main.h"
 
+/* global variable declaration */
+extern modbus_t *mb;
+
 
 int main(int argc, char *argv[])
 {

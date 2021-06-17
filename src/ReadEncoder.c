@@ -11,6 +11,8 @@
 /* Header of this function */
 #include "readEncoder.h"
 
+/* global variable declaration */
+modbus_t *ctx;
 
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
@@ -30,7 +32,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (debug)
         printDebug(ctx);
 
-    /* Set slave nuctxer in the context */
+    /* Set slave number in the context */
     rc = modbus_set_slave(ctx, slaveAddr);
     printf("modbus_set_slave return: %d\n", rc);
     if (rc != 0)
