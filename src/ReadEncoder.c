@@ -60,12 +60,12 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Get response timeout */
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
-    printf("Default response timeout: %ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
+    printf("Default response timeout: %ld sec %ld \230sec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
     /* Set response timeout */
     modbus_set_response_timeout(ctx, resTimeSec, resTimeuSec); 
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
-    printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
+    printf("Set response timeout:     %d sec %d \230sec \n", tv_sec, tv_usec );
 
     if (recovery)
     {
