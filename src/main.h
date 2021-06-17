@@ -3,6 +3,7 @@
 
 #include <stdio.h>       /* printf  */
 #include <getopt.h>      /* getopt API */
+#include "print_usage.h"
 #include "readEncoder.h"
 #include <stdlib.h>
 #include <string.h>
@@ -21,7 +22,7 @@ int      data_bit    = 0;
 int      stop_bit    = 0;
 int      slaveAddr   = 0;
 uint32_t resTimeSec  = 0;
-uint32_t resTimeuSec = 0;
+uint32_t resTimeμSec = 0;
 bool     optionsDone = false;
 int      loops       = 0;
 int      repTime     = 0;

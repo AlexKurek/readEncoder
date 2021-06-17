@@ -10,18 +10,13 @@
 /* -- Includes -- */
 #include "main.h"
 
-/* -- Printing usage -- */
-void print_usage(void) {
-    printf("Usage: [-s] value [-l] value [-n] devName (e.g. ttyUSB0) [-b] value [-p] 'N', 'E' or 'O' [-d] value [-s] value [-a] value [-e] value [-u] value [-o] value [-r] value [-c] value [-g] value  or [-h] for help\n");
-}
 
 int main(int argc, char *argv[])
 {
-
     /* -- Defining inputs -- */
     static struct option long_options[] = {
         {"help",         no_argument,       0,  'h' },
-        {"start",        required_argument, 0,  's' },  // where to start reading
+        {"start",        required_argument, 0,  's' },  // where to start reading (w/o offset)
         {"length",       required_argument, 0,  'l' },  // how many registers to read
         {"deviceName",   required_argument, 0,  'n' },  // e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"
         {"baud",         required_argument, 0,  'b' },  // [bps]
@@ -39,9 +34,8 @@ int main(int argc, char *argv[])
     };
 
 
-
     /* -- Parsing inputs -- */
-    while ((opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1)
+    while ( (opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1 )
     {
         optionsDone = true;
         switch (opt)
@@ -49,6 +43,7 @@ int main(int argc, char *argv[])
              case 'h' :
              {
                 printf("Reading encoder for SRT software\n");
+				printUsage();
                 exit(0);
                 break;
              }
@@ -97,13 +92,13 @@ int main(int argc, char *argv[])
              case '?':
              {
                 printf("Wrong option(s) passed\n");
-                print_usage();
+                printUsage();
                 exit(EXIT_FAILURE);
                 break;
              }
              default:
              {
-                print_usage();
+                printUsage();
                 exit(EXIT_FAILURE);
              }
         }
@@ -113,10 +108,10 @@ int main(int argc, char *argv[])
     if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O'))
     {
         printf("Wrong parity value\n");
-        print_usage();
+        printUsage();
         exit(EXIT_FAILURE);
     }
-    if ((resTimeSec + resTimeuSec == 0) && (optionsDone == true))
+    if ((resTimeSec + resTimeμSec == 0) && (optionsDone == true))
     {
         printf("Response time can't be = 0\n");
         exit(EXIT_FAILURE);
@@ -124,7 +119,7 @@ int main(int argc, char *argv[])
     if (argc == 1)
     {
         printf("No options detected\n");
-        print_usage();
+        printUsage();
         exit(EXIT_FAILURE);
     }
     if (strstr(dNameInp, "/dev/") == NULL)
@@ -135,7 +130,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeμSec, loops, repTime, recovery, debug);
+        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeμSec, loops, repTime, recovery, debug );
 
     return 0;
 }
