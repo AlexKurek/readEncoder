@@ -11,10 +11,11 @@
 /* Header of this function */
 #include "readEncoder.h"
 
+
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeμSec, int loops, int repTime, bool recovery, bool debug)
 {
-    modbus_t *mb;
+    modbus_t *ctx;
     uint16_t tab_reg[length];         // The results of reading are stored here
     struct timeval response_timeout;
     uint32_t tv_sec  = 0;             // defaults
@@ -26,73 +27,51 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     /* Create a context for RTU */
     printf("\n");
     printf("Trying to connect...\n");
-    mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
+    ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
     if (debug)
-    {
-        modbus_set_debug(mb, TRUE);                                // set debug flag of the context
-        printf("Debud mode on\n");
-        int getRTS = modbus_rtu_get_rts(mb);
-        printf("Return of get_rts:      %d\n", getRTS);
-        printf("Return of RTU_RTS_NONE: %d\n", MODBUS_RTU_RTS_NONE);
-        printf("Return of RTU_RTS_UP:   %d\n", MODBUS_RTU_RTS_UP);
-        printf("Return of RTU_RTS_DOWN: %d\n", MODBUS_RTU_RTS_DOWN);
-        int getSerial = modbus_rtu_get_serial_mode(mb);
-        if (getSerial == 0)
-        {
-            if (MODBUS_RTU_RS232 == 1)
-                printf("RTU is in RS232 mode\n");
-            if (MODBUS_RTU_RS485 == 1)
-                printf("RTU is in RS485 mode\n");
-        }
-        int getDelay = modbus_rtu_get_rts_delay(mb);
-        if (getDelay != -1)
-            printf("RTS delay:     %d [μs]\n", getDelay);
-        int getHeader = modbus_get_header_length(mb);
-        if (getHeader != -1)
-            printf("Header length: %d\n", getHeader);
-    }
+		printDebug(ctx);
 
-    /* Set slave number in the context */
-    rc = modbus_set_slave(mb, slaveAddr);
+    /* Set slave nuctxer in the context */
+    rc = modbus_set_slave(ctx, slaveAddr);
     printf("modbus_set_slave return: %d\n", rc);
     if (rc != 0)
     {
         printf("modbus_set_slave: %s \n", modbus_strerror(errno));
-        modbus_close(mb);
-        modbus_free(mb);
+        modbus_close(ctx);
+        modbus_free(ctx);
         return -1;
     }
 
     /* Establish a Modbus connection */
-    if (modbus_connect(mb) == -1)
+    if (modbus_connect(ctx) == -1)
     {
         fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
-        modbus_close(mb);
-        modbus_free(mb);
+        modbus_close(ctx);
+        modbus_free(ctx);
         return -1;
     }
-    if (NULL == mb)
+    if (NULL == ctx)
     {
         printf("Unable to create modbus context\n");
-        modbus_close(mb);
-        modbus_free(mb);
+        modbus_close(ctx);
+        modbus_free(ctx);
         return -1;
     }
     printf("Created modbus context\n");
 
     /* Get response timeout */
-    modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
+    modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
     printf("Default response timeout: %ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
     /* Set response timeout */
-    modbus_set_response_timeout(mb, resTimeSec, resTimeμSec); 
-    modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
+    modbus_set_response_timeout(ctx, resTimeSec, resTimeμSec); 
+    modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
     if (recovery)
     {
         printf("Setting error recovery mode\n");
-        modbus_set_error_recovery(mb, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
+        modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
     }
 
 
@@ -106,7 +85,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             int k = j+1;
             printf("( %d / %d ) Trying to read the registers...\n", k, loops);
         }
-        int read_val = modbus_read_registers (mb, start, length, tab_reg);
+        int read_val = modbus_read_registers (ctx, start, length, tab_reg);
         if (read_val == -1)
             printf("ERROR: %s\n", modbus_strerror(errno));
         else
@@ -129,7 +108,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
 
     /* Closing the context */
-    modbus_close(mb);
-    modbus_free(mb);
+    modbus_close(ctx);
+    modbus_free(ctx);
     return 0;
 }
