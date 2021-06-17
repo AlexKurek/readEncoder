@@ -44,7 +44,7 @@ or the same in longer version:
 
 Command line options:\
 {"help",         no_argument,       0,  'h' },
-{"start",        required_argument, 0,  's' },  // where to start reading\
+{"start",        required_argument, 0,  's' },  // where to start reading (w/o offset)\
 {"length",       required_argument, 0,  'l' },  // how many registers to read\
 {"deviceName",   required_argument, 0,  'n' },  // e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"\
 {"baud",         required_argument, 0,  'b' },  // [bps]\

@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
         {"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2
         {"slave_ad",     required_argument, 0,  'a' },  // slave address
         {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]
-        {"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part
+        {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
         {"recovery",     required_argument, 0,  'c' },  // error recovery mode
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
                 resTimeSec  = atoi(optarg);
                 break;
              case 'u':
-                resTimeuSec = atoi(optarg);
+                resTimeμSec = atoi(optarg);
                 break;
              case 'o':
                 loops       = atoi(optarg);
@@ -134,8 +134,8 @@ int main(int argc, char *argv[])
     }
 
     /* -- Pass inputs to function readEncoder -- */
-    if ( (start >= 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug);
+    if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
+        readEncoder(start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeμSec, loops, repTime, recovery, debug);
 
     return 0;
 }

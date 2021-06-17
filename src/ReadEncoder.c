@@ -12,7 +12,7 @@
 #include "readEncoder.h"
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeμSec, int loops, int repTime, bool recovery, bool debug)
 {
     modbus_t *mb;
     uint16_t tab_reg[length];         // The results of reading are stored here
@@ -85,7 +85,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Default response timeout: %ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
     /* Set response timeout */
-    modbus_set_response_timeout(mb, resTimeSec, resTimeuSec); 
+    modbus_set_response_timeout(mb, resTimeSec, resTimeμSec); 
     modbus_get_response_timeout(mb, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
