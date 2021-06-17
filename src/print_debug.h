@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+extern modbus_t *ctx;
 void printDebug(modbus_t);
 
 #endif
