@@ -112,7 +112,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         else
         {
             printf("Got data from the encoder\n");
-            printf("Read registers: %d\n", read_val);
+            printf("Read %d registers: \n", read_val);
             for(int i=0; i<length; i++)
                 printf("%d ", tab_reg[i]);
             printf("\n");
