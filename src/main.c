@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
                 resTimeSec  = atoi(optarg);
                 break;
              case 'u':
-                resTimeμSec = atoi(optarg);
+                resTimeuSec = atoi(optarg);
                 break;
              case 'o':
                 loops       = atoi(optarg);
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
         printUsage();
         exit(EXIT_FAILURE);
     }
-    if ((resTimeSec + resTimeμSec == 0) && (optionsDone == true))
+    if ((resTimeSec + resTimeuSec == 0) && (optionsDone == true))
     {
         printf("Response time can't be = 0\n");
         exit(EXIT_FAILURE);
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeμSec, loops, repTime, recovery, debug );
+        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug );
 	else
 	{
 		printf("Something went wrong\n");
