@@ -28,23 +28,29 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Trying to connect...\n");
     mb = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu(const char *device, int baud, char parity, int data_bit, int stop_bit)
     if (debug)
-	{
+    {
         modbus_set_debug(mb, TRUE);                                // set debug flag of the context
-		printf("Entered debud moge\n");
-		int getRTS = modbus_rtu_get_rts(mb);
-		printf("Return of get_rts:           %d\n", getRTS);
-		printf("Return of RTU_RTS_NONE:      %d\n", MODBUS_RTU_RTS_NONE);
-		printf("Return of RTU_RTS_UP:        %d\n", MODBUS_RTU_RTS_UP);
-		printf("Return of RTU_RTS_DOWN:      %d\n", MODBUS_RTU_RTS_DOWN);
-		int getSerial = modbus_rtu_get_serial_mode(mb);
-		printf("Return of get_serial_mode:   %d\n", getSerial);
-		printf("Return of RTU_RS232:         %d\n", MODBUS_RTU_RS232);
-		printf("Return of RTU_RS485:         %d\n", MODBUS_RTU_RS485);
-		int getDelay = modbus_rtu_get_rts_delay(mb);
-		printf("Return of get_rts_delay:     %d\n", getDelay);
-		int getHeader = modbus_get_header_length(mb);
-		printf("Return of get_header_length: %d\n", getHeader);
-	}
+        printf("Debud mode on\n");
+        int getRTS = modbus_rtu_get_rts(mb);
+        printf("Return of get_rts:      %d\n", getRTS);
+        printf("Return of RTU_RTS_NONE: %d\n", MODBUS_RTU_RTS_NONE);
+        printf("Return of RTU_RTS_UP:   %d\n", MODBUS_RTU_RTS_UP);
+        printf("Return of RTU_RTS_DOWN: %d\n", MODBUS_RTU_RTS_DOWN);
+        int getSerial = modbus_rtu_get_serial_mode(mb);
+        if (getSerial == 0)
+        {
+            if (MODBUS_RTU_RS232 == 1)
+                printf("RTU is in RS232 mode\n");
+            if (MODBUS_RTU_RS485 == 1)
+                printf("RTU is in RS485 mode\n");
+        }
+        int getDelay = modbus_rtu_get_rts_delay(mb);
+        if (getDelay != -1)
+            printf("RTS delay:     %d [μs]\n", getDelay);
+        int getHeader = modbus_get_header_length(mb);
+        if (getHeader != -1)
+            printf("Header length: %d\n", getHeader);
+    }
 
     /* Set slave number in the context */
     rc = modbus_set_slave(mb, slaveAddr);
@@ -67,7 +73,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
     if (NULL == mb)
     {
-        printf("Unable to create libmodbus context\n");
+        printf("Unable to create modbus context\n");
         modbus_close(mb);
         modbus_free(mb);
         return -1;

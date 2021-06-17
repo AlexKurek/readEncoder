@@ -112,13 +112,13 @@ int main(int argc, char *argv[])
     /* -- Verifying inputs -- */
     if ((parity != '\0') && (parity != 'N') && (parity != 'E') && (parity != 'O'))
     {
-        printf("Wrong parity argument value\n");
+        printf("Wrong parity value\n");
         print_usage();
         exit(EXIT_FAILURE);
     }
     if ((resTimeSec + resTimeuSec == 0) && (optionsDone == true))
     {
-        printf("Response time can't be == 0\n");
+        printf("Response time can't be = 0\n");
         exit(EXIT_FAILURE);
     }
     if (argc == 1)
