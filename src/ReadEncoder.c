@@ -17,8 +17,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 {
     modbus_t *ctx;
     uint16_t tab_reg[length];   // The results of reading are stored here
-	uint16_t tab_regSN[1];
-	uint16_t tab_regVer[1];
+    uint16_t tab_regSN[1];
+    uint16_t tab_regVer[1];
     struct timeval response_timeout;
     uint32_t tv_sec  = 0;
     uint32_t tv_usec = 0;
@@ -29,7 +29,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     /* Create a context for RTU */
     printf("\n");
     printf("Trying to connect...\n");
-    ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
+    ctx = modbus_new_rtu (dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
 
     if (debug)
     {
@@ -99,21 +99,21 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
     }
 
-	/* Read and print SN register */
-	printf("Trying to read SN...\n");
-	int SN = modbus_read_registers (ctx, serialNoReg, 1, tab_regSN);
-	if (SN == -1)
-		printf("ERROR: %s\n", modbus_strerror(errno));
-	else
-		printf("SN: %d\n", tab_regSN[0]);
+    /* Read and print SN register */
+    printf("Trying to read SN...\n");
+    int SN = modbus_read_registers (ctx, serialNoReg, 1, tab_regSN);
+    if (SN == -1)
+        printf("ERROR: %s\n", modbus_strerror(errno));
+    else
+        printf("SN: %d\n", tab_regSN[0]);
 
-	/* Read and print version register */
-	printf("Trying to read version...\n");
-	int ver = modbus_read_registers (ctx, verReg, 1, tab_regVer);
-	if (ver == -1)
-		printf("ERROR: %s\n", modbus_strerror(errno));
-	else
-		printf("Version: %d\n", tab_regVer[0]);
+    /* Read and print version register */
+    printf("Trying to read version...\n");
+    int ver = modbus_read_registers (ctx, verReg, 1, tab_regVer);
+    if (ver == -1)
+        printf("ERROR: %s\n", modbus_strerror(errno));
+    else
+        printf("Version: %d\n", tab_regVer[0]);
 
     /* Read and print registers from the address in 'start' */
     for (int j=0; j<loops; j++)
