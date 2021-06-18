@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
              case 'h' :
              {
                 printf("Reading encoder for SRT software\n");
-				printUsage();
+                printUsage();
                 exit(0);
                 break;
              }
@@ -131,11 +131,11 @@ int main(int argc, char *argv[])
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
         readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug );
-	else
-	{
-		printf("Something went wrong\n");
-		exit(EXIT_FAILURE);
-	}
+    else
+    {
+        printf("Something went wrong\n");
+        exit(EXIT_FAILURE);
+    }
 
     return 0;
 }

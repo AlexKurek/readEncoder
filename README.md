@@ -34,8 +34,8 @@ or the same in longer version:
               --data_bit 8 \
               --stop_bit 1 \
               --slave_ad 127 \
-              --timeout_sec  1 \
-              --timeout_usec 0 \
+              --timeout_sec  0 \
+              --timeout_usec 20000 \
               --loops 1 \
               --repTime 0 \
               --recovery true \

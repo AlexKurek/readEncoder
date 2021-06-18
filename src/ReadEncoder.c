@@ -15,11 +15,13 @@
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
 {
-	modbus_t *ctx;
-    uint16_t tab_reg[length];         // The results of reading are stored here
+    modbus_t *ctx;
+    uint16_t tab_reg[length];   // The results of reading are stored here
+	uint16_t tab_regSN[1];
+	uint16_t tab_regVer[1];
     struct timeval response_timeout;
-    uint32_t tv_sec  = 0;             // defaults
-    uint32_t tv_usec = 500;           // defaults
+    uint32_t tv_sec  = 0;
+    uint32_t tv_usec = 0;
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
     int rc;
@@ -30,29 +32,29 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
 
     if (debug)
-	{
-		modbus_set_debug(ctx, TRUE);  // set debug flag of the context
-		printf("Debud mode on\n");
-		int getRTS = modbus_rtu_get_rts(ctx);
-		printf("Return of get_rts:      %d\n", getRTS);
-		printf("Return of RTU_RTS_NONE: %d\n", MODBUS_RTU_RTS_NONE);
-		printf("Return of RTU_RTS_UP:   %d\n", MODBUS_RTU_RTS_UP);
-		printf("Return of RTU_RTS_DOWN: %d\n", MODBUS_RTU_RTS_DOWN);
-		int getSerial = modbus_rtu_get_serial_mode(ctx);
-		if (getSerial == 0)
-		{
-			if (MODBUS_RTU_RS232 == 1)
-				printf("RTU is in RS232 mode\n");
-			if (MODBUS_RTU_RS485 == 1)
-				printf("RTU is in RS485 mode\n");
-		}
-		int getDelay = modbus_rtu_get_rts_delay(ctx);
-		if (getDelay != -1)
-			printf("RTS delay:     %d [μs]\n", getDelay);
-		int getHeader = modbus_get_header_length(ctx);
-		if (getHeader != -1)
-			printf("Header length: %d\n", getHeader);
-	}
+    {
+        modbus_set_debug(ctx, TRUE);  // set debug flag of the context
+        printf("Debud mode on\n");
+        int getRTS = modbus_rtu_get_rts(ctx);
+        printf("Return of get_rts:      %d\n", getRTS);
+        printf("Return of RTU_RTS_NONE: %d\n", MODBUS_RTU_RTS_NONE);
+        printf("Return of RTU_RTS_UP:   %d\n", MODBUS_RTU_RTS_UP);
+        printf("Return of RTU_RTS_DOWN: %d\n", MODBUS_RTU_RTS_DOWN);
+        int getSerial = modbus_rtu_get_serial_mode(ctx);
+        if (getSerial == 0)
+        {
+            if (MODBUS_RTU_RS232 == 1)
+                printf("RTU is in RS232 mode\n");
+            if (MODBUS_RTU_RS485 == 1)
+                printf("RTU is in RS485 mode\n");
+        }
+        int getDelay = modbus_rtu_get_rts_delay(ctx);
+        if (getDelay != -1)
+            printf("RTS delay:     %d [μs]\n", getDelay);
+        int getHeader = modbus_get_header_length(ctx);
+        if (getHeader != -1)
+            printf("Header length: %d\n", getHeader);
+    }
 
     /* Set slave number in the context */
     rc = modbus_set_slave(ctx, slaveAddr);
@@ -84,12 +86,12 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Get response timeout */
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
-    printf("Default response timeout: %ld sec %ld \230sec \n", response_timeout.tv_sec, response_timeout.tv_usec );
+    printf("Default response timeout: %ld sec %ld usec \n", response_timeout.tv_sec, response_timeout.tv_usec );
 
     /* Set response timeout */
     modbus_set_response_timeout(ctx, resTimeSec, resTimeuSec); 
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
-    printf("Set response timeout:     %d sec %d \230sec \n", tv_sec, tv_usec );
+    printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
     if (recovery)
     {
@@ -97,6 +99,21 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
     }
 
+	/* Read and print SN register */
+	printf("Trying to read SN...\n");
+	int SN = modbus_read_registers (ctx, serialNoReg, 1, tab_regSN);
+	if (SN == -1)
+		printf("ERROR: %s\n", modbus_strerror(errno));
+	else
+		printf("SN: %d\n", tab_regSN[0]);
+
+	/* Read and print version register */
+	printf("Trying to read version...\n");
+	int ver = modbus_read_registers (ctx, verReg, 1, tab_regVer);
+	if (ver == -1)
+		printf("ERROR: %s\n", modbus_strerror(errno));
+	else
+		printf("Version: %d\n", tab_regVer[0]);
 
     /* Read and print registers from the address in 'start' */
     for (int j=0; j<loops; j++)
