@@ -4,7 +4,6 @@
 #include <stdio.h>       /* printf  */
 #include <getopt.h>      /* getopt API */
 #include "print_usage.h"
-#include "print_debug.h"
 #include "readEncoder.h"
 #include <stdlib.h>
 #include <string.h>

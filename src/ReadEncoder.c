@@ -11,12 +11,11 @@
 /* Header of this function */
 #include "readEncoder.h"
 
-/* global variable */
-modbus_t *ctx;
 
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, bool recovery, bool debug)
 {
+	modbus_t *ctx;
     uint16_t tab_reg[length];         // The results of reading are stored here
     struct timeval response_timeout;
     uint32_t tv_sec  = 0;             // defaults
@@ -25,8 +24,35 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     response_timeout.tv_usec = tv_usec;
     int rc;
 
+    /* Create a context for RTU */
+    printf("\n");
+    printf("Trying to connect...\n");
+    ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
+
     if (debug)
-        printDebug();
+	{
+		modbus_set_debug(ctx, TRUE);  // set debug flag of the context
+		printf("Debud mode on\n");
+		int getRTS = modbus_rtu_get_rts(ctx);
+		printf("Return of get_rts:      %d\n", getRTS);
+		printf("Return of RTU_RTS_NONE: %d\n", MODBUS_RTU_RTS_NONE);
+		printf("Return of RTU_RTS_UP:   %d\n", MODBUS_RTU_RTS_UP);
+		printf("Return of RTU_RTS_DOWN: %d\n", MODBUS_RTU_RTS_DOWN);
+		int getSerial = modbus_rtu_get_serial_mode(ctx);
+		if (getSerial == 0)
+		{
+			if (MODBUS_RTU_RS232 == 1)
+				printf("RTU is in RS232 mode\n");
+			if (MODBUS_RTU_RS485 == 1)
+				printf("RTU is in RS485 mode\n");
+		}
+		int getDelay = modbus_rtu_get_rts_delay(ctx);
+		if (getDelay != -1)
+			printf("RTS delay:     %d [μs]\n", getDelay);
+		int getHeader = modbus_get_header_length(ctx);
+		if (getHeader != -1)
+			printf("Header length: %d\n", getHeader);
+	}
 
     /* Set slave number in the context */
     rc = modbus_set_slave(ctx, slaveAddr);
@@ -103,5 +129,9 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         }
         sleep (repTime);
     }
+
+    /* Closing the context */
+    modbus_close(ctx);
+    modbus_free(ctx);
     return 0;
 }

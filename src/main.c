@@ -10,9 +10,6 @@
 /* -- Includes -- */
 #include "main.h"
 
-/* global variable declaration */
-extern modbus_t *ctx;
-
 
 int main(int argc, char *argv[])
 {
@@ -131,12 +128,6 @@ int main(int argc, char *argv[])
         printf("Short device name in input, expanding it to: %s\n", dName);
     }
 
-    /* -- Create a context for RTU. All modnus operations goes below -- */
-    /* Create a context for RTU */
-    printf("\n");
-    printf("Trying to connect...\n");
-    ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
-
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
         readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug );
@@ -146,8 +137,5 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-    /* Closing the context */
-    modbus_close(ctx);
-    modbus_free(ctx);
     return 0;
 }
