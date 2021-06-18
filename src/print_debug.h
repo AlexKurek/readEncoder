@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void printDebug(modbus_t);
+void printDebug(void);
 
 #endif

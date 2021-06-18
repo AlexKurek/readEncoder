@@ -53,8 +53,8 @@ Command line options:\
 {"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
 {"slave_ad",     required_argument, 0,  'a' },  // slave address\
 {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
-{"timeout_usec", required_argument, 0,  'u' },  // and the [usec] part\
+{"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)\
 {"loops",        required_argument, 0,  'o' },  // how many loops of reading
 {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
-{"recovery",     required_argument, 0,  'c' },  // error recovery mode. Deefault = false\
-{"debug",        required_argument, 0,  'g' },  // debug mode. Deefault = false
+{"recovery",     required_argument, 0,  'c' },  // error recovery mode. Default = false\
+{"debug",        required_argument, 0,  'g' },  // debug mode. Default = false

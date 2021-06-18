@@ -11,7 +11,7 @@
 /* Header of this function */
 #include "readEncoder.h"
 
-/* global variable declaration */
+/* global variable */
 modbus_t *ctx;
 
 /* Reads register values to read_val table */
@@ -20,17 +20,13 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     uint16_t tab_reg[length];         // The results of reading are stored here
     struct timeval response_timeout;
     uint32_t tv_sec  = 0;             // defaults
-    uint32_t tv_usec = 500;
+    uint32_t tv_usec = 500;           // defaults
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
     int rc;
 
-    /* Create a context for RTU */
-    printf("\n");
-    printf("Trying to connect...\n");
-    ctx = modbus_new_rtu(dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
     if (debug)
-        printDebug(ctx);
+        printDebug();
 
     /* Set slave number in the context */
     rc = modbus_set_slave(ctx, slaveAddr);
@@ -107,9 +103,5 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         }
         sleep (repTime);
     }
-
-    /* Closing the context */
-    modbus_close(ctx);
-    modbus_free(ctx);
     return 0;
 }

@@ -3,7 +3,10 @@
 /* -- Includes -- */
 #include "print_debug.h"
 
-void printDebug (modbus_t *ctx)
+/* global variable */
+modbus_t *ctx;
+
+void printDebug (void)
 {
     modbus_set_debug(ctx, TRUE);  // set debug flag of the context
     printf("Debud mode on\n");
