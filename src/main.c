@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
         {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
-        {"recovery",     required_argument, 0,  'c' },  // error recovery mode
-        {"debug",        required_argument, 0,  'g' },  // debug mode
+        {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Bool type
+        {"debug",        required_argument, 0,  'g' },  // debug mode. Bool type
         {0,              0,                 0,   0  }
     };
 
@@ -84,10 +84,16 @@ int main(int argc, char *argv[])
                 repTime     = atoi(optarg);
                 break;
              case 'c':
-                recovery    = *optarg;
+			 {
+                recovery    = optarg;
+				fputs(recovery ? "true\n" : "false\n", stdout);
                 break;
+			 }
              case 'g':
-                debug       = *optarg;
+			 {
+                debug       = optarg;
+				fputs(debug ? "true\n" : "false\n", stdout);
+			 }
                 break;
              case '?':
              {
