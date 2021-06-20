@@ -17,9 +17,10 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 {
     modbus_t *ctx;
     uint16_t tab_reg[length];   // The results of reading are stored here
-    uint16_t tab_regSN[1];
+    uint16_t tab_regSN_lo[1];
+    uint16_t tab_regSN_hi[1];
     uint16_t tab_regVer[1];
-    struct timeval response_timeout;
+    struct   timeval response_timeout;
     uint32_t tv_sec  = 0;
     uint32_t tv_usec = 0;
     response_timeout.tv_sec  = tv_sec;
@@ -101,11 +102,16 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Read and print SN register */
     printf("Trying to read SN...\n");
-    int SN = modbus_read_registers (ctx, serialNoReg, 1, tab_regSN);
-    if (SN == -1)
+    int SNhi = modbus_read_registers (ctx, serialNoRegHi, 1, tab_regSN_hi);
+    int SNlo = modbus_read_registers (ctx, serialNoRegLo, 1, tab_regSN_lo);
+    if ((SNhi == -1) || (SNlo == -1))
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
-        printf("SN: %d\n", tab_regSN[0]);
+    {
+        printf("SN hi: %d\n", tab_regSN_hi[0]);
+        printf("SN lo: %d\n", tab_regSN_lo[0]);
+		// printf("SN   : %d\n", SN);
+    }
 
     /* Read and print version register */
     printf("Trying to read version...\n");
@@ -113,7 +119,11 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (ver == -1)
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
+    {
         printf("Version: %d\n", tab_regVer[0]);
+        if ((tab_regVer[0] != 101) && (debug))
+            printf("We tested only version 101\n");
+    }
 
     /* Read and print registers from the address in 'start' */
     for (int j=0; j<loops; j++)
