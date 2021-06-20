@@ -84,16 +84,16 @@ int main(int argc, char *argv[])
                 repTime     = atoi(optarg);
                 break;
              case 'c':
-			 {
+             {
                 recovery    = optarg;
-				fputs(recovery ? "true\n" : "false\n", stdout);
+                fputs(recovery ? "true\n" : "false\n", stdout);
                 break;
-			 }
+             }
              case 'g':
-			 {
+             {
                 debug       = optarg;
-				fputs(debug ? "true\n" : "false\n", stdout);
-			 }
+                fputs(debug ? "true\n" : "false\n", stdout);
+             }
                 break;
              case '?':
              {

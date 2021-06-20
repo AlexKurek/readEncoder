@@ -32,7 +32,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Trying to connect...\n");
     ctx = modbus_new_rtu (dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
 
-	// fputs(debug ? "true\n" : "false\n", stdout);
+    // fputs(debug ? "true\n" : "false\n", stdout);
     if (debug == 1)
     {
         modbus_set_debug(ctx, TRUE);  // set debug flag of the context
@@ -109,8 +109,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
     {
-		uint32_t SN = tab_regSN_lo[0] | (tab_regSN_hi[0] << 16);
-		printf("SN: %d\n", SN);
+        uint32_t SN = tab_regSN_lo[0] | (tab_regSN_hi[0] << 16);
+        printf("SN: %d\n", SN);
     }
 
     /* Read and print version register */
