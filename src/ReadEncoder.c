@@ -32,8 +32,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Trying to connect...\n");
     ctx = modbus_new_rtu (dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
 
-    // fputs(debug ? "true\n" : "false\n", stdout);
-    if (debug == 1)
+    if (debug)
     {
         modbus_set_debug(ctx, TRUE);  // set debug flag of the context
         printf("Debud mode on\n");
@@ -126,35 +125,65 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
 
     /* Read and print registers from the address in 'start' */
-    for (int j=0; j<loops; j++)
+    if (loops == 0)
     {
-        if (loops == 1)
+        for (;;)
+        {
             printf("Trying to read the registers...\n");
-        else
-        {
-            int k = j+1;
-            printf("( %d / %d ) Trying to read the registers...\n", k, loops);
-        }
-        int read_val = modbus_read_registers (ctx, start, length, tab_reg);
-        if (read_val == -1)
-            printf("ERROR: %s\n", modbus_strerror(errno));
-        else
-        {
-            printf("Got data from the encoder\n");
-            printf("Read %d registers: \n", read_val);
-            for(int i=0; i<length; i++)
-                printf("%d ", tab_reg[i]);
-            printf("\n");
-            if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
-            {
-                double posRegister = tab_reg[1];
-                double posDeg = ( posRegister / 65536 ) * 360;
-                printf("Position is among read registers. In degrees: %f\n", posDeg);
-            }
+            int read_val = modbus_read_registers (ctx, start, length, tab_reg);
+            if (read_val == -1)
+                printf("ERROR: %s\n", modbus_strerror(errno));
             else
-                printf("Position is not among read registers\n");
+            {
+                printf("Got data from the encoder\n");
+                printf("Read %d registers: \n", read_val);
+                for(int i=0; i<length; i++)
+                    printf("%d ", tab_reg[i]);
+                printf("\n");
+                if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                {
+                    double posRegister = tab_reg[1];
+                    double posDeg = ( posRegister / 65536 ) * 360;
+                    printf("Position is among read registers. In degrees: %f\n", posDeg);
+                }
+                else
+                    printf("Position is not among read registers\n");
+            }
+            sleep (repTime);
         }
-        sleep (repTime);
+    }
+    if (loops > 0)
+    {
+        for (int j=0; j<loops; j++)
+        {
+            if (loops == 1)
+                printf("Trying to read the registers...\n");
+            if (loops > 1)
+            {
+                int k = j+1;
+                printf("( %d / %d ) Trying to read the registers...\n", k, loops);
+            }
+            int read_val = modbus_read_registers (ctx, start, length, tab_reg);
+            if (read_val == -1)
+                printf("ERROR: %s\n", modbus_strerror(errno));
+            else
+            {
+                printf("Got data from the encoder\n");
+                printf("Read %d registers: \n", read_val);
+                for(int i=0; i<length; i++)
+                    printf("%d ", tab_reg[i]);
+                printf("\n");
+                if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                {
+                    double posRegister = tab_reg[1];
+                    double posDeg = ( posRegister / 65536 ) * 360;
+                    printf("Position is among read registers. In degrees: %f\n", posDeg);
+                }
+                else
+                    printf("Position is not among read registers\n");
+            }
+            sleep (repTime);
+        }
     }
 
     /* Closing the context */

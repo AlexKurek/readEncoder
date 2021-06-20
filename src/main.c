@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         {"slave_ad",     required_argument, 0,  'a' },  // slave address
         {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]
         {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)
-        {"loops",        required_argument, 0,  'o' },  // how many loops of reading
+        {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
         {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Bool type
         {"debug",        required_argument, 0,  'g' },  // debug mode. Bool type
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
 
     /* -- Parsing inputs -- */
-    while ( (opt = getopt_long(argc, argv,"hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1 )
+    while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1 )
     {
         optionsDone = true;
         switch (opt)
@@ -84,16 +84,10 @@ int main(int argc, char *argv[])
                 repTime     = atoi(optarg);
                 break;
              case 'c':
-             {
                 recovery    = optarg;
-                fputs(recovery ? "true\n" : "false\n", stdout);
                 break;
-             }
              case 'g':
-             {
                 debug       = optarg;
-                fputs(debug ? "true\n" : "false\n", stdout);
-             }
                 break;
              case '?':
              {
