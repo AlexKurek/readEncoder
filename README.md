@@ -22,7 +22,7 @@ make install
 ## Run:
 E.g.:
 ```
-./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 1 -u 0 -o 1 -r 0 -c 1 -g 1
+./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 0 -u 40000 -o 1 -r 0 -c 1 -g 1
 ```
 or the same in longer version:
 ```
@@ -35,7 +35,7 @@ or the same in longer version:
               --stop_bit 1 \
               --slave_ad 127 \
               --timeout_sec  0 \
-              --timeout_usec 20000 \
+              --timeout_usec 40000 \
               --loops 1 \
               --repTime 0 \
               --recovery true \
