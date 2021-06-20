@@ -43,7 +43,7 @@ or the same in longer version:
 ```
 
 Command line options:\
-{"help",         no_argument,       0,  'h' },
+{"help",         no_argument,       0,  'h' },\
 {"start",        required_argument, 0,  's' },  // where to start reading (w/o offset)\
 {"length",       required_argument, 0,  'l' },  // how many registers to read\
 {"deviceName",   required_argument, 0,  'n' },  // e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"\
@@ -53,8 +53,8 @@ Command line options:\
 {"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
 {"slave_ad",     required_argument, 0,  'a' },  // slave address\
 {"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
-{"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)\
-{"loops",        required_argument, 0,  'o' },  // how many loops of reading
+{"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms) or 40000\
+{"loops",        required_argument, 0,  'o' },  // how many loops of reading\
 {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
 {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Default = false\
 {"debug",        required_argument, 0,  'g' },  // debug mode. Default = false
