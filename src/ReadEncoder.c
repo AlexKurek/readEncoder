@@ -108,9 +108,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
     {
-        printf("SN hi: %d\n", tab_regSN_hi[0]);
-        printf("SN lo: %d\n", tab_regSN_lo[0]);
-		// printf("SN   : %d\n", SN);
+		uint32_t SN = tab_regSN_lo[0] | (tab_regSN_hi[0] << 16);
+		printf("SN: %d\n", SN);
     }
 
     /* Read and print version register */
