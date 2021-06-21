@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
         {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
-        {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Bool type
-        {"debug",        required_argument, 0,  'g' },  // debug mode. Bool type
+        {"recovery",     required_argument, 0,  'c' },  // error recovery mode
+        {"debug",        required_argument, 0,  'g' },  // debug mode
         {0,              0,                 0,   0  }
     };
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     /* -- Parsing inputs -- */
     while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1 )
     {
-        optionsDone = true;
+        optionsParsed = true;
         switch (opt)
         {
              case 'h' :
@@ -111,9 +111,9 @@ int main(int argc, char *argv[])
         printUsage();
         exit(EXIT_FAILURE);
     }
-    if ((resTimeSec + resTimeuSec == 0) && (optionsDone == true))
+    if ((resTimeSec + resTimeuSec == 0) && (optionsParsed == true))
     {
-        printf("Response time can't be = 0\n");
+        printf("Response time can't be = 0. We recommend >= 20000 us.\n");
         exit(EXIT_FAILURE);
     }
     if (argc == 1)

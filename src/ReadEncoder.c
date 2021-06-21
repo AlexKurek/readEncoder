@@ -32,7 +32,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     printf("Trying to connect...\n");
     ctx = modbus_new_rtu (dName, baud, parity, data_bit, stop_bit);  // modbus_new_rtu (const char *device, int baud, char parity, int data_bit, int stop_bit)
 
-	if ( (strcmp(debug, "true") == 0) || (strcmp(debug, "TRUE") == 0) || (strcmp(debug, "1") == 0) )
+    if ( (strcmp(debug, "true") == 0) || (strcmp(debug, "TRUE") == 0) || (strcmp(debug, "1") == 0) )
     {
         modbus_set_debug(ctx, TRUE);  // set debug flag of the context
         printf("Debud mode on\n");
@@ -94,7 +94,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
-	if ( (strcmp(recovery, "true") == 0) || (strcmp(recovery, "TRUE") == 0) || (strcmp(debug, "1") == 0) )
+    if ( (strcmp(recovery, "true") == 0) || (strcmp(recovery, "TRUE") == 0) || (strcmp(debug, "1") == 0) )
     {
         printf("Setting error recovery mode\n");
         modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
