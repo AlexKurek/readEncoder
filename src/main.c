@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
 
     /* -- Parsing inputs -- */
-    while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:c:g:", long_options, &long_index )) != -1 )
+    while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:i:c:g:", long_options, &long_index )) != -1 )
     {
         optionsParsed = true;
         switch (opt)
