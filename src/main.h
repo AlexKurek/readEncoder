@@ -26,7 +26,7 @@ uint32_t resTimeuSec = 0;
 bool     optionsDone = false;
 int      loops       = 0;
 int      repTime     = 0;
-bool     recovery    = false;
-bool     debug       = false;
+char*    recovery    = (char*)"false";
+char*    debug       = (char*)"false";
 
 #endif
