@@ -12,6 +12,6 @@
 #define serialNoRegHi 42
 #define serialNoRegLo 43
 
-int readEncoder(int, int, const char*, int, char, int, int, int, uint32_t, uint32_t, int, int, char*, char*);
+int readEncoder(int, int, const char*, int, char, int, int, int, uint32_t, uint32_t, int, int, char*, char*, char*);
 
 #endif

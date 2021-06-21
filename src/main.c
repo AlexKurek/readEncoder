@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
         {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
+        {"inPlace",      required_argument, 0,  'i' },  // print registers in place or scroll the screen. Def = true
         {"recovery",     required_argument, 0,  'c' },  // error recovery mode
         {"debug",        required_argument, 0,  'g' },  // debug mode
         {0,              0,                 0,   0  }
@@ -83,6 +84,9 @@ int main(int argc, char *argv[])
              case 'r':
                 repTime     = atoi(optarg);
                 break;
+             case 'i':
+                inPlace     = optarg;
+                break;
              case 'c':
                 recovery    = optarg;
                 break;
@@ -130,7 +134,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, recovery, debug );
+        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, inPlace, recovery, debug );
     else
     {
         printf("Something went wrong\n");

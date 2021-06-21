@@ -13,7 +13,7 @@
 
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* recovery, char* debug)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* inPlace, char* recovery, char* debug)
 {
     modbus_t *ctx;
     uint16_t tab_reg[length];   // The results of reading are stored here
