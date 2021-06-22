@@ -6,7 +6,6 @@ Reading encoder module for [SRT: The Small Radio Telescope](https://www.haystack
 * git (for installation)
 * cmake (for installation)
 * Doxygen (for documentation, optional)
-* ncurses
 * [modbus library](https://github.com/stephane/libmodbus)
 * [SRT software](https://www.haystack.mit.edu/haystack-public-outreach/srt-the-small-radio-telescope-for-education/)
 
@@ -58,6 +57,6 @@ Command line options:\
 {"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms) or 40000\
 {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf\
 {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
-{"inPlace",      required_argument, 0,  'i' },  // print registers in place or scroll the screen. Def = true\
+{"inPlace",      required_argument, 0,  'i' },  // in inifinite loop mode print registers in place or scroll the screen. Def = false.\
 {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Default = false\
 {"debug",        required_argument, 0,  'g' },  // debug mode. Default = false

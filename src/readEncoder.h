@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
-#include <ncurses.h>
+#include <stdlib.h>
 
 #define verReg        41
 #define serialNoRegHi 42
