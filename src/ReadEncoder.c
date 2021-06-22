@@ -94,7 +94,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
     printf("Set response timeout:     %d sec %d usec \n", tv_sec, tv_usec );
 
-    if ( (strcmp(recovery, "true") == 0) || (strcmp(recovery, "TRUE") == 0) || (strcmp(debug, "1") == 0) )
+    if ( (strcmp(recovery, "true") == 0) || (strcmp(recovery, "TRUE") == 0) || (strcmp(recovery, "1") == 0) )
     {
         printf("Setting error recovery mode\n");
         modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
@@ -120,7 +120,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     else
     {
         printf("Version: %d\n", tab_regVer[0]);
-        if ((tab_regVer[0] != 101) && (debug))
+        if ( (tab_regVer[0] != 101) && ( (strcmp(debug, "true") == 0) || (strcmp(debug, "TRUE") == 0) || (strcmp(debug, "1") == 0) ) )
             printf("We tested only version 101\n");
     }
 
@@ -170,17 +170,23 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             {
                 printf("Got data from the encoder\n");
                 printf("Read %d registers: \n", read_val);
-                for(int i=0; i<length; i++)
-                    printf("%d ", tab_reg[i]);
-                printf("\n");
-                if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                if ( (strcmp(inPlace, "true") == 0) || (strcmp(inPlace, "TRUE") == 0) || (strcmp(inPlace, "1") == 0) )
                 {
-                    double posRegister = tab_reg[1];
-                    double posDeg = ( posRegister / 65536 ) * 360;
-                    printf("Position is among read registers. In degrees: %f\n", posDeg);
                 }
                 else
-                    printf("Position is not among read registers\n");
+                {
+                    for(int i=0; i<length; i++)
+                        printf("%d ", tab_reg[i]);
+                    printf("\n");
+                    if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                    {
+                        double posRegister = tab_reg[1];
+                        double posDeg = ( posRegister / 65536 ) * 360;
+                        printf("Position is among read registers. In degrees: %f\n", posDeg);
+                    }
+                    else
+                        printf("Position is not among read registers\n");
+                }
             }
             sleep (repTime);
         }
