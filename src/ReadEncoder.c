@@ -172,6 +172,12 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
                 printf("Read %d registers: \n", read_val);
                 if ( (strcmp(inPlace, "true") == 0) || (strcmp(inPlace, "TRUE") == 0) || (strcmp(inPlace, "1") == 0) )
                 {
+					initscr ();
+					curs_set (0);
+					mvprintw (0, 0, "%s", "string");
+					refresh ();
+					sleep(1);
+					endwin();
                 }
                 else
                 {

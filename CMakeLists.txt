@@ -53,7 +53,7 @@ else (DOXYGEN_FOUND)
   message("Doxygen need to be installed to generate the doxygen documentation")
 endif (DOXYGEN_FOUND)
 
-find_package(Curses)
+find_package(Curses REQUIRED)
 
 # GLOB allows for wildcard additions
 file(GLOB SOURCES "src/*.c")
@@ -87,7 +87,7 @@ include_directories(
 
 add_executable(ReadEncoder ${SOURCES})
 # target_link_libraries(ReadEncoder ${Modbus_LIBRARIES} ${wcslib_LIBRARIES})
-target_link_libraries(ReadEncoder ${Modbus_LIBRARIES})
+target_link_libraries(ReadEncoder ${Modbus_LIBRARIES} ${CURSES_LIBRARIES})
 
 install(TARGETS ReadEncoder DESTINATION bin)
 
