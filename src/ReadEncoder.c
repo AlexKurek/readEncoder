@@ -12,6 +12,13 @@
 #include "readEncoder.h"
 modbus_t *ctx;
 
+
+void closeMB (void)
+{
+	modbus_close(ctx);
+	modbus_free(ctx);
+}
+
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* inPlace, char* recovery, char* debug)
 {
@@ -62,8 +69,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (rc != 0)
     {
         printf("modbus_set_slave: %s \n", modbus_strerror(errno));
-        modbus_close(ctx);
-        modbus_free(ctx);
+		closeMB ();
         return -1;
     }
 
@@ -71,15 +77,13 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (modbus_connect(ctx) == -1)
     {
         fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
-        modbus_close(ctx);
-        modbus_free(ctx);
+		closeMB ();
         return -1;
     }
     if (NULL == ctx)
     {
         printf("Unable to create modbus context\n");
-        modbus_close(ctx);
-        modbus_free(ctx);
+		closeMB ();
         return -1;
     }
     printf("Created modbus context\n");
@@ -133,8 +137,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             if (read_val == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
-                modbus_close(ctx);
-                modbus_free(ctx);
+				closeMB ();
                 return -1;
             }
             else
@@ -173,8 +176,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             if (read_val == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
-                modbus_close(ctx);
-                modbus_free(ctx);
+				closeMB ();
                 return -1;
             }
             else
@@ -198,7 +200,6 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
 
     /* Closing the context */
-    modbus_close(ctx);
-    modbus_free(ctx);
+	closeMB ();
     return 0;
 }
