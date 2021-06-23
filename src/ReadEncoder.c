@@ -10,12 +10,11 @@
 /* -- Includes -- */
 /* Header of this function */
 #include "readEncoder.h"
-
+modbus_t *ctx;
 
 /* Reads register values to read_val table */
 int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* inPlace, char* recovery, char* debug)
 {
-    modbus_t *ctx;
     uint16_t tab_reg[length];   // The results of reading are stored here
     uint16_t tab_regSN_lo[1];
     uint16_t tab_regSN_hi[1];
@@ -140,7 +139,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             }
             else
             {
-                if ( (strcmp(inPlace, "true") == 0) || (strcmp(inPlace, "TRUE") == 0) || (strcmp(inPlace, "1") == 0) )
+                if ( (strcmp(inPlace, "true") == 0) || (strcmp(inPlace, "TRUE") == 0) || (strcmp(inPlace, "1") == 0) )  // for basic in place printing
                     if (system ("clear")){};
                 printf("Got data from the encoder\n");
                 printf("Read %d registers: \n", read_val);

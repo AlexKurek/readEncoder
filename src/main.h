@@ -9,6 +9,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+extern modbus_t *ctx;
+
 int opt;
 
 int      long_index    = 0;
