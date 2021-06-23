@@ -86,7 +86,7 @@ include_directories(
 
 add_executable(ReadEncoder ${SOURCES})
 # target_link_libraries(ReadEncoder ${Modbus_LIBRARIES} ${wcslib_LIBRARIES})
-target_link_libraries(ReadEncoder ${Modbus_LIBRARIES}})
+target_link_libraries(ReadEncoder ${Modbus_LIBRARIES})
 
 install(TARGETS ReadEncoder DESTINATION bin)
 
