@@ -28,6 +28,7 @@ uint32_t resTimeuSec   = 0;
 bool     optionsParsed = false;
 int      loops         = 0;
 int      repTime       = 0;
+char*    setTerm       = (char*)"false";
 char*    inPlace       = (char*)"true";
 char*    recovery      = (char*)"false";
 char*    debug         = (char*)"false";

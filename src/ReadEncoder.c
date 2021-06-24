@@ -15,23 +15,25 @@ modbus_t *ctx;
 
 void closeMB (void)
 {
-	modbus_close(ctx);
-	modbus_free(ctx);
+    modbus_close(ctx);
+    modbus_free(ctx);
 }
 
 /* Reads register values to read_val table */
-int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* inPlace, char* recovery, char* debug)
+int readEncoder(int start, int length, const char* dName, int baud, char parity, int data_bit, int stop_bit, int slaveAddr, uint32_t resTimeSec, uint32_t resTimeuSec, int loops, int repTime, char* inPlace, char* setTerm, char* recovery, char* debug)
 {
     uint16_t tab_reg[length];   // The results of reading are stored here
     uint16_t tab_regSN_lo[1];
     uint16_t tab_regSN_hi[1];
     uint16_t tab_regVer[1];
+    uint16_t tab_regTer[1];
     struct   timeval response_timeout;
     uint32_t tv_sec  = 0;
     uint32_t tv_usec = 0;
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
     int rc;
+    int setTermInt = 0;
 
     /* Create a context for RTU */
     printf("\n");
@@ -69,7 +71,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (rc != 0)
     {
         printf("modbus_set_slave: %s \n", modbus_strerror(errno));
-		closeMB ();
+        closeMB ();
         return -1;
     }
 
@@ -77,16 +79,50 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     if (modbus_connect(ctx) == -1)
     {
         fprintf(stderr, "Connection failed: %s\n", modbus_strerror(errno));
-		closeMB ();
+        closeMB ();
         return -1;
     }
     if (NULL == ctx)
     {
         printf("Unable to create modbus context\n");
-		closeMB ();
+        closeMB ();
         return -1;
     }
     printf("Created modbus context\n");
+
+    /* Get termination */
+    printf("Trying to read termination register...\n");
+    int ter = modbus_read_registers (ctx, terminReg, 1, tab_regTer);
+    if (ter == -1)
+        printf("ERROR: %s\n", modbus_strerror(errno));
+    else
+        printf("Termination: %d\n", tab_regTer[0]);
+
+    /* Set termination */
+    if ( (strcmp(setTerm, "0") == 0) || (strcmp(setTerm, "off") == 0) || (strcmp(setTerm, "OFF") == 0) || (strcmp(setTerm, "1") == 0) || (strcmp(setTerm, "on") == 0) || (strcmp(setTerm, "ON") == 0) )
+    {
+        if ( (strcmp(setTerm, "0") == 0)   || (strcmp(setTerm, "1") == 0) )
+            setTermInt = atoi(setTerm);
+        if ( (strcmp(setTerm, "off") == 0) || (strcmp(setTerm, "OFF") == 0) )
+            setTermInt = 0;
+        if ( (strcmp(setTerm, "on") == 0)  || (strcmp(setTerm, "ON") == 0) )
+            setTermInt = 1;
+        printf("Trying to set termination register to %d...\n", setTermInt);
+        int terWrite = modbus_write_register(ctx, terminReg, setTermInt);
+        if (terWrite == -1)
+        {
+            printf("ERROR: %s\n", modbus_strerror(errno));
+            closeMB ();
+            return -1;
+        }
+        int terWriteSet = modbus_write_register(ctx, terminRegExe, 1);   // execute the above
+        if (terWriteSet == -1)
+        {
+            printf("ERROR: %s\n", modbus_strerror(errno));
+            closeMB ();
+            return -1;
+        }
+    }
 
     /* Get response timeout */
     modbus_get_response_timeout(ctx, &tv_sec, &tv_usec); 
@@ -137,7 +173,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             if (read_val == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
-				closeMB ();
+                closeMB ();
                 return -1;
             }
             else
@@ -176,7 +212,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             if (read_val == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
-				closeMB ();
+                closeMB ();
                 return -1;
             }
             else
@@ -200,6 +236,6 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     }
 
     /* Closing the context */
-	closeMB ();
+    closeMB ();
     return 0;
 }

@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
         {"timeout_μsec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms)
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
+        {"setTerm",      required_argument, 0,  'm' },  // set termination register. False / 0 or off / 1 or on. Def = false
         {"inPlace",      required_argument, 0,  'i' },  // in inifinite loop mode print registers in place or scroll the screen. Def = false
         {"recovery",     required_argument, 0,  'c' },  // error recovery mode
         {"debug",        required_argument, 0,  'g' },  // debug mode
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 
 
     /* -- Parsing inputs -- */
-    while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:i:c:g:", long_options, &long_index )) != -1 )
+    while ( (opt = getopt_long(argc, argv, "hs:l:n:b:p:d:t:a:e:u:o:r:m:i:c:g:", long_options, &long_index )) != -1 )
     {
         optionsParsed = true;
         switch (opt)
@@ -83,6 +84,9 @@ int main(int argc, char *argv[])
                 break;
              case 'r':
                 repTime     = atoi(optarg);
+                break;
+             case 'm':
+                setTerm     = optarg;
                 break;
              case 'i':
                 inPlace     = optarg;
@@ -134,7 +138,7 @@ int main(int argc, char *argv[])
 
     /* -- Pass inputs to function readEncoder -- */
     if ( (start > 0) && (length > 0) && (*dNameInp != '\0') && (baud > 0) && (data_bit >= 5) && (data_bit <= 8) && ( (stop_bit == 1) || (stop_bit == 2) ) )
-        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, inPlace, recovery, debug );
+        readEncoder ( start, length, dName, baud, parity, data_bit, stop_bit, slaveAddr, resTimeSec, resTimeuSec, loops, repTime, setTerm, inPlace, recovery, debug );
     else
     {
         printf("Something went wrong\n");

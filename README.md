@@ -38,6 +38,7 @@ or the same in longer version:
               --timeout_usec 40000 \
               --loops 1 \
               --repTime 0 \
+              --setTerm false \
               --inPlace false \
               --recovery true \
               --debug true
@@ -57,6 +58,7 @@ Command line options:\
 {"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms) or 40000\
 {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf\
 {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
+{"setTerm",      required_argument, 0,  'm' },  // set termination register. False / 0 or off / 1 or on. Def = false\
 {"inPlace",      required_argument, 0,  'i' },  // in inifinite loop mode print registers in place or scroll the screen. Def = false.\
 {"recovery",     required_argument, 0,  'c' },  // error recovery mode. Default = false\
 {"debug",        required_argument, 0,  'g' },  // debug mode. Default = false
