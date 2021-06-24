@@ -107,31 +107,31 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
             setTermInt = 0;
         if ( (strcmp(setTerm, "on") == 0)  || (strcmp(setTerm, "ON") == 0) )
             setTermInt = 1;
-		if (tab_regTer[0] != setTermInt)   // checking, if termination register is already set to the requested value
-		{
-			printf("Trying to set termination register to %d...\n", setTermInt);
-			int terWrite = modbus_write_register(ctx, terminReg, setTermInt);
-			if (terWrite == -1)
-			{
-				printf("ERROR: %s\n", modbus_strerror(errno));
-				closeMB ();
-				return -1;
-			}
-			int terWriteSet = modbus_write_register(ctx, terminRegExe, 1);   // execute the above
-			if (terWriteSet == -1)
-			{
-				printf("ERROR: %s\n", modbus_strerror(errno));
-				closeMB ();
-				return -1;
-			}
-			ter = modbus_read_registers (ctx, terminReg, 1, tab_regTer);     // veryfying
-			if (ter == -1)
-				printf("ERROR: %s\n", modbus_strerror(errno));
-			else
-				printf("Termination: %d\n", tab_regTer[0]);
-		}
-		else
-			printf("Termination register already set to this value, so not writing it again\n");
+        if (tab_regTer[0] != setTermInt)   // checking, if termination register is already set to the requested value
+        {
+            printf("Trying to set termination register to %d...\n", setTermInt);
+            int terWrite = modbus_write_register(ctx, terminReg, setTermInt);
+            if (terWrite == -1)
+            {
+                printf("ERROR: %s\n", modbus_strerror(errno));
+                closeMB ();
+                return -1;
+            }
+            int terWriteSet = modbus_write_register(ctx, terminRegExe, 1);   // execute the above
+            if (terWriteSet == -1)
+            {
+                printf("ERROR: %s\n", modbus_strerror(errno));
+                closeMB ();
+                return -1;
+            }
+            ter = modbus_read_registers (ctx, terminReg, 1, tab_regTer);     // veryfying
+            if (ter == -1)
+                printf("ERROR: %s\n", modbus_strerror(errno));
+            else
+                printf("Termination: %d\n", tab_regTer[0]);
+        }
+        else
+            printf("Termination register already set to this value, so not writing it again\n");
     }
 
     /* Get response timeout */
