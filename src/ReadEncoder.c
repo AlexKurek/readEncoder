@@ -92,7 +92,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Get termination */
     printf("Trying to read termination register...\n");
-    int ter = modbus_read_registers (ctx, terminReg, 1, tab_regTer);
+    int ter = modbus_read_registers (ctx, TERMINREG, 1, tab_regTer);
     if (ter == -1)
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
@@ -110,21 +110,21 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
         if (tab_regTer[0] != setTermInt)   // checking, if termination register is already set to the requested value
         {
             printf("Trying to set termination register to %d...\n", setTermInt);
-            int terWrite = modbus_write_register(ctx, terminReg, setTermInt);
+            int terWrite = modbus_write_register(ctx, TERMINREG, setTermInt);
             if (terWrite == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
                 closeMB ();
                 return -1;
             }
-            int terWriteSet = modbus_write_register(ctx, terminRegExe, 1);   // execute the above
+            int terWriteSet = modbus_write_register(ctx, TERMINREGEXE, 1);   // execute the above
             if (terWriteSet == -1)
             {
                 printf("ERROR: %s\n", modbus_strerror(errno));
                 closeMB ();
                 return -1;
             }
-            ter = modbus_read_registers (ctx, terminReg, 1, tab_regTer);     // veryfying
+            ter = modbus_read_registers (ctx, TERMINREG, 1, tab_regTer);     // veryfying
             if (ter == -1)
                 printf("ERROR: %s\n", modbus_strerror(errno));
             else
@@ -151,8 +151,8 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Read and print SN register */
     printf("Trying to read SN...\n");
-    int SNhi = modbus_read_registers (ctx, serialNoRegHi, 1, tab_regSN_hi);
-    int SNlo = modbus_read_registers (ctx, serialNoRegLo, 1, tab_regSN_lo);
+    int SNhi = modbus_read_registers (ctx, SERIALNOREGHI, 1, tab_regSN_hi);
+    int SNlo = modbus_read_registers (ctx, SERIALNOREGLO, 1, tab_regSN_lo);
     if ((SNhi == -1) || (SNlo == -1))
         printf("ERROR: %s\n", modbus_strerror(errno));
     else
@@ -163,7 +163,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
 
     /* Read and print version register */
     printf("Trying to read version...\n");
-    int ver = modbus_read_registers (ctx, verReg, 1, tab_regVer);
+    int ver = modbus_read_registers (ctx, VERREG, 1, tab_regVer);
     if (ver == -1)
         printf("ERROR: %s\n", modbus_strerror(errno));
     else

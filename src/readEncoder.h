@@ -9,11 +9,11 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define verReg        41
-#define serialNoRegHi 42
-#define serialNoRegLo 43
-#define terminReg     268
-#define terminRegExe  269
+#define VERREG        41
+#define SERIALNOREGHI 42
+#define SERIALNOREGLO 43
+#define TERMINREG     268
+#define TERMINREGEXE  269
 
 
 int readEncoder(int, int, const char*, int, char, int, int, int, uint32_t, uint32_t, int, int, char*, char*, char*, char*);
