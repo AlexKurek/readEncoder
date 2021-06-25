@@ -30,6 +30,7 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
     struct   timeval response_timeout;
     uint32_t tv_sec  = 0;
     uint32_t tv_usec = 0;
+    uint32_t pos32   = 0;
     response_timeout.tv_sec  = tv_sec;
     response_timeout.tv_usec = tv_usec;
     int rc;
@@ -201,6 +202,11 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
                     double posDeg = ( posRegister / 65536 ) * 360;
                     printf("Position is among read registers. In degrees: %f\n", posDeg);
                 }
+                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )
+                {
+                    pos32 = tab_reg[0] | (tab_reg[1]<<16);
+                    printf("Both position adresses were read. In 32-bit format: %d\n", pos32);
+                }
                 else
                     printf("Position is not among read registers\n");
             }
@@ -237,6 +243,11 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
                     double posRegister = tab_reg[1];
                     double posDeg = ( posRegister / 65536 ) * 360;
                     printf("Position is among read registers. In degrees: %f\n", posDeg);
+                }
+                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )
+                {
+                    pos32 = tab_reg[0] | (tab_reg[1]<<16);
+                    printf("Both position adresses were read. In 32-bit format: %d\n", pos32);
                 }
                 else
                     printf("Position is not among read registers\n");
