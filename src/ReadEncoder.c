@@ -196,13 +196,13 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
                 for(int i=0; i<length; i++)
                     printf("%d ", tab_reg[i]);
                 printf("\n");
-                if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                if ( (2-start)*(2-(length+start)) <= 0 )      // check if 2 (address of position register) was read
                 {
                     double posRegister = tab_reg[1];
                     double posDeg = ( posRegister / 65536 ) * 360;
                     printf("Position is among read registers. In degrees: %f\n", posDeg);
                 }
-                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )
+                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )  // quick check if both address of position registers were read
                 {
                     pos32 = tab_reg[0] | (tab_reg[1]<<16);
                     printf("Both position adresses were read. In 32-bit format: %d\n", pos32);
@@ -238,13 +238,13 @@ int readEncoder(int start, int length, const char* dName, int baud, char parity,
                 for(int i=0; i<length; i++)
                     printf("%d ", tab_reg[i]);
                 printf("\n");
-                if ( (2-start)*(2-(length+start)) <= 0 )   // check if 2 (address of position register) was read
+                if ( (2-start)*(2-(length+start)) <= 0 )      // check if 2 (address of position register) was read
                 {
                     double posRegister = tab_reg[1];
                     double posDeg = ( posRegister / 65536 ) * 360;
                     printf("Position is among read registers. In degrees: %f\n", posDeg);
                 }
-                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )
+                if ( (tab_reg[0] !=0) && (tab_reg[1] != 0) )  // quick check if both address of position registers were read
                 {
                     pos32 = tab_reg[0] | (tab_reg[1]<<16);
                     printf("Both position adresses were read. In 32-bit format: %d\n", pos32);
