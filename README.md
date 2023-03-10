@@ -24,7 +24,7 @@ E.g.:
 ```
 ./ReadEncoder -s 1 -l 2 -n "ttyUSB0" -b 19200 -p 'E' -d 8 -t 1 -a 127 -e 0 -u 40000 -o 1 -r 0 -i 1 -c 1 -g 1
 ```
-or the same in longer version:
+or the same in a longer version:
 ```
 ./ReadEncoder --start 1 \
               --length 2 \
