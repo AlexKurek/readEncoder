@@ -26,39 +26,41 @@ E.g.:
 ```
 or the same in a longer version:
 ```
-./ReadEncoder --start 1 |
-              --length 2 |
-              --deviceName "ttyUSB0" |
-              --baud 19200 |
-              --parity 'E' |
-              --data_bit 8 |
-              --stop_bit 1 |
-              --slave_ad 127 |
-              --timeout_sec  0 |
-              --timeout_usec 40000 |
-              --loops 1 |
-              --repTime 0 |
-              --setTerm false |
-              --inPlace false |
-              --recovery true |
+./ReadEncoder --start 1 \
+              --length 2 \
+              --deviceName "ttUSB0" \
+              --baud 19200 \
+              --parity 'E' \
+              --data_bit 8 \
+              --stop_bit 1 \
+              --slave_ad 127 \
+              --timeout_sec  0 \
+              --timeout_usec 40000 \
+              --loops 1 \
+              --repTime 0 \
+              --setTerm false \
+              --inPlace false \
+              --recovery true \
               --debug true
 ```
 
-Command line options:\
-|help|         no_argument,       |'h'| |
-|start|        required_argument, |'s'|  where to start reading (w/o offset)|
-|length|       required_argument, |'l'|  how many registers to read|
-|deviceName|   required_argument, |'n'|  e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"|
-|baud|         required_argument, |'b'|  [bps]|
-|parity|       required_argument, |'p'|  'N', 'E' or 'O'|
-|data_bit|     required_argument, |'d'|  number of bits of data, the allowed values are 5, 6, 7 and 8|
-|stop_bit|     required_argument, |'t'|  bits of stop, the allowed values are 1 and 2|
-|slave_ad|     required_argument, |'a'|  slave address|
-|timeout_sec|  required_argument, |'e'|  timeout to set in [sec]|
-|timeout_usec| required_argument, |'u'|  and the [μsec] part. At least 13000, better 20000 (20ms) or 40000|
-|loops|        required_argument, |'o'|  how many loops of reading. 0 = Inf|
-|repTime|      required_argument, |'r'|  time between loops [msec]|
-|setTerm|      required_argument, |'m'|  set termination register. False / 0 or off / 1 or on. Def = false|
-|inPlace|      required_argument, |'i'|  in inifinite loop mode print registers in place or scroll the screen. Def = false.|
-|recovery|     required_argument, |'c'|  error recovery mode. Default = false|
-|debug|        required_argument, |'g'|  debug mode. Default = false|
+Command line options:
+|long command| short command| argument| description|
+| --- | :---: | --- | --- |
+|help|         h| no       | |
+|start|        s| required | where to start reading (w/o offset)|
+|length|       l| required | how many registers to read|
+|deviceName|   n| required | e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"|
+|baud|         b| required | [bps]|
+|parity|       p| required | 'N', 'E' or 'O'|
+|data_bit|     d| required | number of bits of data, the allowed values are 5, 6, 7 and 8|
+|stop_bit|     t| required | bits of stop, the allowed values are 1 and 2|
+|slave_ad|     a| required | slave address|
+|timeout_sec|  e| required | timeout to set in [sec]|
+|timeout_usec| u| required | and the [μsec] part. At least 13000, better 20000 (20ms) or 40000|
+|loops|        o| required | how many loops of reading. 0 = Inf|
+|repTime|      r| required | time between loops [msec]|
+|setTerm|      m| required | set termination register. False / 0 or off / 1 or on. Def = false|
+|inPlace|      i| required | in inifinite loop mode print registers in place or scroll the screen. Def = false|
+|recovery|     c| required | error recovery mode. Default = false|
+|debug|        g| required | debug mode. Default = false|
