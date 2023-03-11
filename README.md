@@ -43,6 +43,14 @@ or the same in a longer version:
               --recovery true \
               --debug true
 ```
+If you will get an error message like:
+```
+error while loading shared libraries: libmodbus.so.5: cannot open shared object file: No such file or directory
+```
+then you need to add the `libmodbus` library folder to the `LD_LIBRARY_PATH`, e.g.:
+```
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/
+```
 
 Command line options:
 |Long command| Short command| Argument| Description|
