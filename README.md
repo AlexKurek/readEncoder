@@ -45,14 +45,14 @@ or the same in a longer version:
 ```
 
 Command line options:
-|long command| short command| argument| description|
+|Long command| Short command| Argument| Description|
 | --- | :---: | --- | --- |
 |help|         h| no       | |
 |start|        s| required | where to start reading (w/o offset)|
 |length|       l| required | how many registers to read|
-|deviceName|   n| required | e.g. `/dev/ttyUSB0` or shorter `ttyUSB0`|
+|deviceName|   n| required | e.g. `"/dev/ttyUSB0"` or shorter `"ttyUSB0"`|
 |baud|         b| required | [bps]|
-|parity|       p| required | `N`, `E` or `O`|
+|parity|       p| required | `'N'`, `'E'` or `'O'`|
 |data_bit|     d| required | number of bits of data, the allowed values are 5, 6, 7 and 8|
 |stop_bit|     t| required | bits of stop, the allowed values are 1 and 2|
 |slave_ad|     a| required | slave address|
