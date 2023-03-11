@@ -16,7 +16,7 @@ mkdir build/
 cd build/
 cmake -DCMAKE_INSTALL_PREFIX="/opt/ReadEncoder/" -DCMAKE_BUILD_TYPE="Release" -DBUILD_DOC=OFF ../
 make
-sudo make install
+make install
 ```
 
 ## Run:
