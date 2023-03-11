@@ -45,20 +45,20 @@ or the same in a longer version:
 ```
 
 Command line options:\
-help         no_argument,         'h'\
-start        required_argument,   's'     where to start reading (w/o offset)\
-length       required_argument,   'l'     how many registers to read\
-deviceName   required_argument,   'n'     e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"\
-baud         required_argument,   'b'     [bps]\
-parity       required_argument,   'p'     'N', 'E' or 'O'\
-data_bit     required_argument,   'd'     number of bits of data, the allowed values are 5, 6, 7 and 8\
-stop_bit     required_argument,   't'     bits of stop, the allowed values are 1 and 2\
-slave_ad     required_argument,   'a'     slave address\
-timeout_sec  required_argument,   'e'     timeout to set in [sec]\
-timeout_usec required_argument,   'u'     and the [μsec] part. At least 1300 better 20000 (20ms) or 40000\
-loops        required_argument,   'o'     how many loops of reading. 0 = Inf\
-repTime      required_argument,   'r'     time between loops [msec]\
-setTerm      required_argument,   'm'     set termination register. False / 0 or off / 1 or on. Def = false\
-inPlace      required_argument,   'i'     in inifinite loop mode print registers in place or scroll the screen. Def = false.\
-recovery     required_argument,   'c'     error recovery mode. Default = false\
-debug        required_argument,   'g'     debug mode. Default = false
+{"help",         no_argument,       0,  'h' },\
+{"start",        required_argument, 0,  's' },  // where to start reading (w/o offset)\
+{"length",       required_argument, 0,  'l' },  // how many registers to read\
+{"deviceName",   required_argument, 0,  'n' },  // e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"\
+{"baud",         required_argument, 0,  'b' },  // [bps]\
+{"parity",       required_argument, 0,  'p' },  // 'N', 'E' or 'O'\
+{"data_bit",     required_argument, 0,  'd' },  // number of bits of data, the allowed values are 5, 6, 7 and 8\
+{"stop_bit",     required_argument, 0,  't' },  // bits of stop, the allowed values are 1 and 2\
+{"slave_ad",     required_argument, 0,  'a' },  // slave address\
+{"timeout_sec",  required_argument, 0,  'e' },  // timeout to set in [sec]\
+{"timeout_usec", required_argument, 0,  'u' },  // and the [μsec] part. At least 13000, better 20000 (20ms) or 40000\
+{"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf\
+{"repTime",      required_argument, 0,  'r' },  // time between loops [msec]\
+{"setTerm",      required_argument, 0,  'm' },  // set termination register. False / 0 or off / 1 or on. Def = false\
+{"inPlace",      required_argument, 0,  'i' },  // in inifinite loop mode print registers in place or scroll the screen. Def = false.\
+{"recovery",     required_argument, 0,  'c' },  // error recovery mode. Default = false\
+{"debug",        required_argument, 0,  'g' },  // debug mode. Default = false
