@@ -16,7 +16,7 @@ mkdir build/
 cd build/
 cmake -DCMAKE_INSTALL_PREFIX="/opt/ReadEncoder/" -DCMAKE_BUILD_TYPE="Release" -DBUILD_DOC=OFF ../
 make
-make install
+sudo make install
 ```
 
 ## Run:
@@ -50,15 +50,15 @@ Command line options:
 |help|         h| no       | |
 |start|        s| required | where to start reading (w/o offset)|
 |length|       l| required | how many registers to read|
-|deviceName|   n| required | e.g. "/dev/ttyUSB0" or shorter "ttyUSB0"|
+|deviceName|   n| required | e.g. `/dev/ttyUSB0` or shorter `ttyUSB0`|
 |baud|         b| required | [bps]|
-|parity|       p| required | 'N', 'E' or 'O'|
+|parity|       p| required | `N`, `E` or `O`|
 |data_bit|     d| required | number of bits of data, the allowed values are 5, 6, 7 and 8|
 |stop_bit|     t| required | bits of stop, the allowed values are 1 and 2|
 |slave_ad|     a| required | slave address|
 |timeout_sec|  e| required | timeout to set in [sec]|
 |timeout_usec| u| required | and the [μsec] part. At least 13000, better 20000 (20ms) or 40000|
-|loops|        o| required | how many loops of reading. 0 = Inf|
+|loops|        o| required | how many loops of reading. `0` = Inf|
 |repTime|      r| required | time between loops [msec]|
 |setTerm|      m| required | set termination register. False / 0 or off / 1 or on. Def = false|
 |inPlace|      i| required | in inifinite loop mode print registers in place or scroll the screen. Def = false|
