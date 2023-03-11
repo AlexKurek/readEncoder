@@ -1,7 +1,7 @@
 /** @file readEncoder.c
  *  @brief Reads encoder registers
  *
- *  Reading encopder registers via modbus protocol
+ *  Read encoder registers via Modbus protocol
  *
  *  @author Aleksander Kurek
  *  @bug No known bugs

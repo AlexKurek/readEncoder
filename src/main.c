@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
         {"loops",        required_argument, 0,  'o' },  // how many loops of reading. 0 = Inf
         {"repTime",      required_argument, 0,  'r' },  // time between loops [msec]
         {"setTerm",      required_argument, 0,  'm' },  // set termination register. False / 0 or off / 1 or on. Def = false
-        {"inPlace",      required_argument, 0,  'i' },  // in inifinite loop mode print registers in place or scroll the screen. Def = false
+        {"inPlace",      required_argument, 0,  'i' },  // in infinite loop mode print registers in place or scroll the screen. Def = false
         {"recovery",     required_argument, 0,  'c' },  // error recovery mode
         {"debug",        required_argument, 0,  'g' },  // debug mode
         {0,              0,                 0,   0  }
