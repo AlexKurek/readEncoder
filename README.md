@@ -64,8 +64,8 @@ Command line options:
 |data_bit|     d| required | number of bits of data, the allowed values are 5, 6, 7 and 8|
 |stop_bit|     t| required | bits of stop, the allowed values are 1 and 2|
 |slave_ad|     a| required | slave address|
-|timeout_sec|  e| required | timeout to set in [sec]|
-|timeout_usec| u| required | and the [μsec] part. At least 13000, better 20000 (20ms) or 40000|
+|timeout_sec|  e| required | timeout to set in [sec]...|
+|timeout_usec| u| required | ...and the [μsec] part. At least 13000, better 20000 (20ms) or 40000|
 |loops|        o| required | how many loops of reading. `0` = Inf|
 |repTime|      r| required | time between loops [msec]|
 |setTerm|      m| required | set termination register. False / 0 or off / 1 or on. Def = false|
