@@ -49,7 +49,7 @@ error while loading shared libraries: libmodbus.so.5: cannot open shared object 
 ```
 then you need to add the `libmodbus` library folder to the `LD_LIBRARY_PATH`, e.g.:
 ```
-echo 'LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib/' >> ~/.bashrc
 ```
 
 Command line options:
